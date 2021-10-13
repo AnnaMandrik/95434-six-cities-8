@@ -1,7 +1,8 @@
 import HeaderPage from '../header-page/header-page';
-import OfferCard from '../offers-card/offers-card';
+//import OfferCard from '../offers-card/offers-card';
+import {Offer} from '../../types/types';
 
-function PropertyPage({offers}: {offers: number[]}): JSX.Element {
+function PropertyPage({offers}: {offers: Offer[]}): JSX.Element {
   return (
     <div className="page">
       <HeaderPage />
@@ -207,8 +208,6 @@ function PropertyPage({offers}: {offers: number[]}): JSX.Element {
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
 
-              {offers.map((offer: number) => <OfferCard key={offer}/>)}
-
             </div>
           </section>
         </div>
@@ -218,3 +217,6 @@ function PropertyPage({offers}: {offers: number[]}): JSX.Element {
 }
 
 export default PropertyPage;
+
+
+//{Offer.map((offer: number) => <OfferCard key={offer}/>)}
