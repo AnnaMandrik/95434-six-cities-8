@@ -52,7 +52,7 @@ export const OFFERS = [
       name: 'Alexander',
     },
     id: 2,
-    images: ['img/apartment-03.jpg','img/apartment-01.jpg', 'img/studio-01.jpg', 'img/apartment-small-04.jpg', 'iimg/room-small.jpg', 'img/apartment-02.jpg'],
+    images: ['img/apartment-03.jpg','img/apartment-01.jpg', 'img/studio-01.jpg', 'img/apartment-small-04.jpg', 'img/room-small.jpg', 'img/apartment-02.jpg'],
     isFavorite: false,
     isPremium: true,
     location: {

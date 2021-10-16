@@ -49,10 +49,6 @@ function Review({commentInfo:{comment, date, rating, user}}: {commentInfo: Comme
 }
 
 
-// {isPremium ? `<div className="property__mark">
-//                 <span>Premium</span>
-//               </div>` : ''}
-
 type PropertyPageProps = {
   offers: Offer[],
   comments: Comment[],
@@ -89,9 +85,10 @@ function PropertyPage({offers, comments, neighbours, authorizationStatus}: Prope
           <div className="property__container container">
             <div className="property__wrapper">
 
-              {isPremium ? `<div className="property__mark">
-                <span>Premium</span>
-              </div>` : null}
+              {isPremium ?
+                <div className="property__mark">
+                  <span>Premium</span>
+                </div> : ''}
 
               <div className="property__name-wrapper">
                 <h1 className="property__name">

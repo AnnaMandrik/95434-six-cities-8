@@ -6,9 +6,6 @@ import {FavoriteBtnProp, TypeOfferCard} from '../../const';
 
 const OFFER_WAY = '/offer/';
 
-// {isPremium ? `<div className="place-card__mark">
-//         <span>Premium</span>
-//       </div>` : ''}
 
 type OfferCardProps = {
   offer: Offer,
@@ -17,7 +14,7 @@ type OfferCardProps = {
 
 function OfferCard({offer, typeCard}: OfferCardProps): JSX.Element {
 
-  const {price, title, previewImage, rating, type, id, isFavorite} = offer;
+  const {price, title, previewImage, rating, type, id, isFavorite, isPremium} = offer;
   const infoClass = typeCard === TypeOfferCard.Main ? '' : 'favorites__card-info';
   const wrapperClass = typeCard === TypeOfferCard.Main ? 'cities__image-wrapper' : 'favorites__image-wrapper';
   const [width, height] = typeCard === TypeOfferCard.Main ? ['260', '200'] : ['150', '110'];
@@ -25,9 +22,10 @@ function OfferCard({offer, typeCard}: OfferCardProps): JSX.Element {
 
   return (
     <>
-      <div className="place-card__mark">
-        <span>Premium</span>
-      </div>
+      {isPremium ?
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div> : ''}
 
       <div className= {`${wrapperClass} place-card__image-wrapper`}>
         <Link to={`${OFFER_WAY}${id}`}>

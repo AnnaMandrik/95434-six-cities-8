@@ -8,7 +8,7 @@ type OffersListProps = {
 }
 
 function OffersList({offers}:OffersListProps):JSX.Element {
-  const [activeOfferCard, setActiveOfferCard] = useState<Offer | null>(null);
+  const [, setActiveOfferCard] = useState<Offer | null>(null);
 
   const handleActiveOfferSelect = (offer: Offer): void => {
     setActiveOfferCard(offer);
@@ -28,7 +28,7 @@ function OffersList({offers}:OffersListProps):JSX.Element {
           onOfferNonSelected={handleNonActiveOfferSelect}
         />
       ))}
-      <h2> иначе ругается на неиспользуемый activeOfferCard <br/>{activeOfferCard}</h2>
+
     </>
   );
 
