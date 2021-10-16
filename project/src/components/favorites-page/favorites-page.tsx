@@ -2,9 +2,14 @@ import {Link} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import FavoriteCard from '../favorite-card/favorite-card';
 import HeaderPage from '../header-page/header-page';
+import {Offer} from '../../types/types';
 
 
-function FavoritesPage({offers, authorizationStatus}: {offers: number[], authorizationStatus: string}): JSX.Element {
+type FavoritesPageProps = {
+  offers: Offer[];
+}
+
+function FavoritesPage({offers}: FavoritesPageProps): JSX.Element {
   return (
     <div className="page">
       <HeaderPage authorizationStatus={AuthorizationStatus.Auth} />
@@ -23,7 +28,9 @@ function FavoritesPage({offers, authorizationStatus}: {offers: number[], authori
                   </div>
                 </div>
                 <div className="favorites__places">
-                  {offers.map((offer: number) => <FavoriteCard key={offer}/>)}
+
+                  {offers.filter((offer) => offer.city.name === 'Amsterdam').map((offer) => <FavoriteCard offer={offer} key={offer.id}/>)}
+
                 </div>
               </li>
 
@@ -36,7 +43,7 @@ function FavoritesPage({offers, authorizationStatus}: {offers: number[], authori
                   </div>
                 </div>
                 <div className="favorites__places">
-                  {offers.map((offer: number) => <FavoriteCard key={offer}/>)}
+                  {offers.filter((offer) => offer.city.name === 'Cologne').map((offer) => <FavoriteCard offer={offer} key={offer.id}/>)}
                 </div>
               </li>
             </ul>

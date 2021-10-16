@@ -49,3 +49,9 @@ export type Comment = {
   rating: number,
   user: User,
 }
+
+export type ButtonFavorite = {
+  className: string,
+  width: string,
+  height: string,
+};

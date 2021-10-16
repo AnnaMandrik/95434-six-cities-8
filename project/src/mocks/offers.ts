@@ -18,7 +18,7 @@ export const OFFERS = [
       name: 'Angelina',
     },
     id: 1,
-    images: ['img/apartment-02.jpg', 'img/room-small.jpg', 'img/studio-01.jpg', 'img/apartment-small-04.jpg'],
+    images: ['img/apartment-02.jpg', 'img/room-small.jpg', 'img/studio-01.jpg', 'img/apartment-small-04.jpg','img/apartment-03.jpg', 'img/room.jpg'],
     isFavorite: false,
     isPremium: false,
     location: {
@@ -52,7 +52,7 @@ export const OFFERS = [
       name: 'Alexander',
     },
     id: 2,
-    images: ['img/apartment-03.jpg', 'img/studio-01.jpg', 'img/apartment-small-04.jpg', 'img/studio-01.jpg', 'img/apartment-small-03.jpg'],
+    images: ['img/apartment-03.jpg','img/apartment-01.jpg', 'img/studio-01.jpg', 'img/apartment-small-04.jpg', 'iimg/room-small.jpg', 'img/apartment-02.jpg'],
     isFavorite: false,
     isPremium: true,
     location: {
@@ -86,7 +86,7 @@ export const OFFERS = [
       name: 'Sonya Blade',
     },
     id: 3,
-    images: ['img/apartment-04.jpg', 'img/studio-01.jpg', 'img/apartment-small-04.jpg', 'img/studio-01.jpg', 'img/apartment-small-03.jpg'],
+    images: ['img/apartment-03.jpg', 'img/studio-01.jpg', 'img/apartment-small-04.jpg', 'img/room.jpg', 'img/room-small.jpg',  'img/apartment-small-03.jpg'],
     isFavorite: true,
     isPremium: true,
     location: {
@@ -120,7 +120,7 @@ export const OFFERS = [
       name: 'Volodya',
     },
     id: 4,
-    images: ['img/apartment-02.jpg', 'img/studio-01.jpg', 'img/apartment-small-04.jpg','img/apartment-01.jpg'],
+    images: ['img/apartment-02.jpg', 'img/studio-01.jpg', 'img/apartment-small-04.jpg','img/apartment-01.jpg','img/room-small.jpg', 'img/apartment-small-03.jpg'],
     isFavorite: true,
     isPremium: false,
     location: {

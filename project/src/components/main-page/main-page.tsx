@@ -1,4 +1,4 @@
-import OfferCard from '../offers-card/offers-card';
+import OffersList from '../offers-list/offers-list';
 import HeaderPage from '../header-page/header-page';
 import Locations from '../locations/locations';
 import {Offer} from '../../types/types';
@@ -11,8 +11,12 @@ type MainPageProps = {
 
 
 function MainPage({offers, authorizationStatus, selectedCity}: MainPageProps): JSX.Element {
+
+  const selectedCityOffers = offers.filter((offer) => offer.city.name === selectedCity);
+
   return (
     <div className="page page--gray page--main">
+
       <HeaderPage authorizationStatus={authorizationStatus} />
 
       <main className="page__main page__main--index">
@@ -24,7 +28,7 @@ function MainPage({offers, authorizationStatus, selectedCity}: MainPageProps): J
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">{selectedCityOffers.length} places to stay in {selectedCity}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -41,7 +45,7 @@ function MainPage({offers, authorizationStatus, selectedCity}: MainPageProps): J
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {offers.map((offer) => <OfferCard key={id}/>)}
+                <OffersList offers={offers} />)
               </div>
             </section>
             <div className="cities__right-section">

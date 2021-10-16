@@ -33,7 +33,7 @@ function App({offers, comments, authorizationStatus, city}: AppPageProps): JSX.E
           />
         </Route>
         <Route exact path = {AppRoute.Property}>
-          <PropertyPage offers={offers} comments={comments} authorizationStatus={authorizationStatus} />
+          <PropertyPage offers={offers} comments={comments} neighbours={offers.slice(1,4)} authorizationStatus={authorizationStatus} />
         </Route>
         <Route>
           <ErrorPage />
