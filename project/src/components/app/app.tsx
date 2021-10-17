@@ -6,30 +6,34 @@ import ErrorPage from '../error-page/error-page';
 import FavoritesPage from '../favorites-page/favorites-page';
 import LoginPage from '../login-page/login-page';
 import PrivateRoute from '../private-route/private-route';
+import {Offer, Comment} from '../../types/types';
 
 
 type AppPageProps = {
-  offers: number[];
+  offers: Offer[],
+  comments: Comment[],
+  authorizationStatus: AuthorizationStatus,
+  city: string,
 }
 
-function App({offers}: AppPageProps): JSX.Element {
+function App({offers, comments, authorizationStatus, city}: AppPageProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path ={AppRoute.Main}>
-          <MainPage offers={offers} authorizationStatus={AuthorizationStatus.NoAuth} />
+          <MainPage offers={offers} authorizationStatus={authorizationStatus} selectedCity={city} />
         </Route>
         <Route exact path ={AppRoute.Login}>
           <LoginPage />
         </Route>
         <Route exact path={AppRoute.Favorites}>
           <PrivateRoute exact path ={AppRoute.Favorites}
-            render={() => <FavoritesPage offers={offers} authorizationStatus={AuthorizationStatus.NoAuth}/>}
-            authorizationStatus={AuthorizationStatus.NoAuth}
+            render={() => <FavoritesPage offers={offers} />}
+            authorizationStatus={authorizationStatus}
           />
         </Route>
         <Route exact path = {AppRoute.Property}>
-          <PropertyPage offers={offers} />
+          <PropertyPage offers={offers} comments={comments} neighbours={offers.slice(1,4)} authorizationStatus={authorizationStatus} />
         </Route>
         <Route>
           <ErrorPage />
