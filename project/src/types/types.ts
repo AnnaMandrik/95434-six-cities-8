@@ -55,3 +55,8 @@ export type ButtonFavorite = {
   width: string,
   height: string,
 };
+
+export type PointInMap = {
+  lat: number,
+  lng: number,
+}

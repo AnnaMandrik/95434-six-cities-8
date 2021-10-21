@@ -3,8 +3,8 @@ export const OFFERS = [
     bedrooms: 3,
     city: {
       location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
+        latitude: 52.3909553943508,
+        longitude: 4.85309666406198,
         zoom: 10,
       },
       name: 'Amsterdam',
@@ -22,8 +22,8 @@ export const OFFERS = [
     isFavorite: false,
     isPremium: false,
     location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
       zoom: 8,
     },
     maxAdults: 4,
@@ -37,8 +37,8 @@ export const OFFERS = [
     bedrooms: 1,
     city: {
       location: {
-        latitude: 52.570216,
-        longitude: 4.795168,
+        latitude: 52.369553943508,
+        longitude: 4.85309666406198,
         zoom: 10,
       },
       name: 'Amsterdam',
@@ -56,8 +56,8 @@ export const OFFERS = [
     isFavorite: false,
     isPremium: true,
     location: {
-      latitude: 52.55514938496378,
-      longitude: 4.873877537499948,
+      latitude: 52.369553943508,
+      longitude: 4.85309666406198,
       zoom: 8,
     },
     maxAdults: 2,
@@ -71,8 +71,8 @@ export const OFFERS = [
     bedrooms: 2,
     city: {
       location: {
-        latitude: 52.580216,
-        longitude: 4.905168,
+        latitude: 52.3909553943508,
+        longitude: 4.929309666406198,
         zoom: 10,
       },
       name: 'Amsterdam',
@@ -90,8 +90,8 @@ export const OFFERS = [
     isFavorite: true,
     isPremium: true,
     location: {
-      latitude: 52.59514938496378,
-      longitude: 4.773877537499948,
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
       zoom: 8,
     },
     maxAdults: 5,
@@ -105,8 +105,8 @@ export const OFFERS = [
     bedrooms: 2,
     city: {
       location: {
-        latitude: 52.480216,
-        longitude: 4.855168,
+        latitude: 52.3809553943508,
+        longitude: 4.939309666406198,
         zoom: 10,
       },
       name: 'Amsterdam',
@@ -124,8 +124,8 @@ export const OFFERS = [
     isFavorite: true,
     isPremium: false,
     location: {
-      latitude: 52.45514938496378,
-      longitude: 4.573877537499948,
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
       zoom: 8,
     },
     maxAdults: 4,

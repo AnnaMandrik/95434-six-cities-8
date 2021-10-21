@@ -167,7 +167,7 @@ function PropertyPage({offers, comments, neighbours, authorizationStatus}: Prope
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
 
-              <OffersList offers={neighbours}/>
+              <OffersList offers={neighbours} />
 
             </div>
           </section>
