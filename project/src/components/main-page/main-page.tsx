@@ -2,6 +2,9 @@ import OffersList from '../offers-list/offers-list';
 import HeaderPage from '../header-page/header-page';
 import Locations from '../locations/locations';
 import {Offer} from '../../types/types';
+import Map from '../map/map';
+import { useState } from 'react';
+import {citiesCoordinates} from '../../const';
 
 type MainPageProps = {
   offers: Offer[],
@@ -9,10 +12,16 @@ type MainPageProps = {
   selectedCity: string,
 }
 
+const center = citiesCoordinates.amsterdam;
 
 function MainPage({offers, authorizationStatus, selectedCity}: MainPageProps): JSX.Element {
 
   const selectedCityOffers = offers.filter((offer) => offer.city.name === selectedCity);
+  const [activeOfferCard, setActiveOfferCard] = useState<Offer | null>(null);
+
+  const handleActiveOfferSelect = (offer: Offer | null): void => {
+    setActiveOfferCard(offer);
+  };
 
   return (
     <div className="page page--gray page--main">
@@ -45,11 +54,13 @@ function MainPage({offers, authorizationStatus, selectedCity}: MainPageProps): J
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <OffersList offers={offers} />)
+                <OffersList handleActiveOfferSelect={handleActiveOfferSelect} offers={selectedCityOffers} />)
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map city={center} offers={selectedCityOffers} activeOfferCard={activeOfferCard}/>
+              </section>
             </div>
           </div>
         </div>

@@ -4,16 +4,27 @@ import {TypeOfferCard} from '../../const';
 
 type MainActiveCardProps = {
   offer: Offer,
-  onOfferSelected: (offer: Offer) => void,
-  onOfferNonSelected: () => void,
+  onOfferSelected?: (offer: Offer | null) => void,
 }
 
 
-function MainActiveCard({offer, onOfferSelected, onOfferNonSelected}: MainActiveCardProps): JSX.Element {
+function MainActiveCard({offer, onOfferSelected}: MainActiveCardProps): JSX.Element {
+
+  const handleMouseEnter = () => {
+    if (onOfferSelected) {
+      onOfferSelected(offer);
+    }
+  };
+  const handleMouseLeave = () => {
+    if (onOfferSelected) {
+      onOfferSelected(null);
+    }
+  };
+
   return (
     <article className="cities__place-card place-card"
-      onMouseEnter={() => onOfferSelected(offer)}
-      onMouseLeave={() => onOfferNonSelected()}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <OfferCard offer={offer} typeCard={TypeOfferCard.Main}/>
     </article>
