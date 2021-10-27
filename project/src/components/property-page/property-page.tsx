@@ -3,10 +3,15 @@ import HeaderPage from '../header-page/header-page';
 import FavoriteBtn from '../favorite-btn/favorite-btn';
 import OffersList from '../offers-list/offers-list';
 import {Offer, Comment} from '../../types/types';
-import {AuthorizationStatus, FavoriteBtnProp} from '../../const';
+import {AuthorizationStatus, FavoriteBtnProp, citiesCoordinates} from '../../const';
 import {createRating} from '../../utils/utils';
 import ErrorPage from '../error-page/error-page';
 import CommentAddForm from '../comment-add-form/comment-add-form';
+import ReviewsList from '../reviews-list/reviews-list';
+import Map from '../map/map';
+import { useState } from 'react';
+
+const center = citiesCoordinates.amsterdam;
 
 function PropertyPicture({src}: {src: string}) {
   return(
@@ -21,33 +26,6 @@ function FeatureInside({featureName}: {featureName: string}) {
   return <li className="property__inside-item">{featureName}</li>;
 }
 
-function Review({commentInfo:{comment, date, rating, user}}: {commentInfo: Comment}) {
-  return (
-    <li className="reviews__item">
-      <div className="reviews__user user">
-        <div className="reviews__avatar-wrapper user__avatar-wrapper">
-          <img className="reviews__avatar user__avatar" src={user.avatarUrl} width="54" height="54" alt="Reviews avatar" />
-        </div>
-        <span className="reviews__user-name">
-          {user.name}
-        </span>
-      </div>
-      <div className="reviews__info">
-        <div className="reviews__rating rating">
-          <div className="reviews__stars rating__stars">
-            <span style={{width: createRating(rating)}}></span>
-            <span className="visually-hidden">Rating</span>
-          </div>
-        </div>
-        <p className="reviews__text">
-          {comment}
-        </p>
-        <time className="reviews__time" dateTime={(new Date(date).toDateString())}>{(new Date(date).toLocaleString('en-US', {month: 'long', year: 'numeric'}))}</time>
-      </div>
-    </li>
-  );
-}
-
 
 type PropertyPageProps = {
   offers: Offer[],
@@ -58,6 +36,9 @@ type PropertyPageProps = {
 
 
 function PropertyPage({offers, comments, neighbours, authorizationStatus}: PropertyPageProps): JSX.Element {
+
+  const [, setActiveOfferCard] = useState<Offer | null>(null);
+
   const params: {id: string} = useParams();
   const id = +params.id;
 
@@ -148,26 +129,24 @@ function PropertyPage({offers, comments, neighbours, authorizationStatus}: Prope
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                <ul className="reviews__list">
-
-                  {comments.map((comment) => <Review commentInfo={comment} key={comment.id} />)}
-
-                </ul>
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
+                <ReviewsList comments={comments}/>
 
                 {authorizationStatus === AuthorizationStatus.Auth ? <CommentAddForm /> : null}
 
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+            <Map city={center} offers={neighbours} activeOfferCard={null}/>
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
 
-              <OffersList offers={neighbours} />
+              <OffersList offers={neighbours} handleActiveOfferSelect={setActiveOfferCard} />
 
             </div>
           </section>

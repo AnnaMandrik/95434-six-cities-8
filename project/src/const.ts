@@ -17,11 +17,6 @@ const FavoriteBtnProp = {
   PROPERTY: {className: 'property', width: '31', height: '33'},
 };
 
-const enum TypeOfferCard {
-  Main = 'Main',
-  Favorite = 'Favorite'
-}
-
 const STARS = [
   {score: '5', titleName: 'perfect'},
   {score: '4', titleName: 'good'},
@@ -40,4 +35,4 @@ const citiesCoordinates = {
 };
 
 
-export {citiesCoordinates, STARS, TypeOfferCard, FavoriteBtnProp, AppRoute, AuthorizationStatus, CITIES};
+export {citiesCoordinates, STARS, FavoriteBtnProp, AppRoute, AuthorizationStatus, CITIES};
