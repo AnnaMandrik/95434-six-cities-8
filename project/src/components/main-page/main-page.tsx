@@ -54,7 +54,7 @@ function MainPage({offers, authorizationStatus, selectedCity}: MainPageProps): J
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <OffersList handleActiveOfferSelect={handleActiveOfferSelect} offers={selectedCityOffers} />)
+                <OffersList handleActiveOfferSelect={handleActiveOfferSelect} offers={selectedCityOffers} />
               </div>
             </section>
             <div className="cities__right-section">

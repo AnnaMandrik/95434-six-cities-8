@@ -20,7 +20,7 @@ export const COMMENTS = [
       avatarUrl: 'img/avatar-angelina.jpg',
       id: 1,
       isPro: true,
-      name: 'Angelina',
+      name: 'Anya',
     },
   },
   {
