@@ -1,3 +1,6 @@
+import {PointInMap} from './types/types';
+
+
 const enum AppRoute {
 Main = '/',
 Login = '/login',
@@ -25,7 +28,7 @@ const STARS = [
   {score: '1', titleName: 'terribly'},
 ];
 
-const citiesCoordinates = {
+const citiesCoordinates: {[property: string]: PointInMap} = {
   amsterdam: {lat: 52.3809553943508, lng: 4.939309666406198},
   paris: {lat: 48.8534, lng: 2.3488},
   brussels: {lat: 50.8504, lng: 4.34878},
@@ -34,5 +37,9 @@ const citiesCoordinates = {
   dusseldorf: {lat: 51.2217, lng: 6.77616},
 };
 
+const enum IconMapColour {
+  Default = './img/pin.svg',
+  Active = './img/pin-active.svg',
+}
 
-export {citiesCoordinates, STARS, FavoriteBtnProp, AppRoute, AuthorizationStatus, CITIES};
+export {IconMapColour, citiesCoordinates, STARS, FavoriteBtnProp, AppRoute, AuthorizationStatus, CITIES};

@@ -1,6 +1,6 @@
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import MainPage from '../main-page/main-page';
+import MainWrapper from '../main-wrapper/main-wrapper';
 import PropertyPage from '../property-page/property-page';
 import ErrorPage from '../error-page/error-page';
 import FavoritesPage from '../favorites-page/favorites-page';
@@ -21,7 +21,7 @@ function App({offers, comments, authorizationStatus, city}: AppPageProps): JSX.E
     <BrowserRouter>
       <Switch>
         <Route exact path ={AppRoute.Main}>
-          <MainPage offers={offers} authorizationStatus={authorizationStatus} selectedCity={city} />
+          <MainWrapper offers={offers} authorizationStatus={authorizationStatus} />
         </Route>
         <Route exact path ={AppRoute.Login}>
           <LoginPage />
@@ -33,7 +33,7 @@ function App({offers, comments, authorizationStatus, city}: AppPageProps): JSX.E
           />
         </Route>
         <Route exact path = {AppRoute.Property}>
-          <PropertyPage offers={offers} comments={comments} neighbours={offers.slice(0,3)} authorizationStatus={authorizationStatus} />
+          <PropertyPage offers={offers} comments={comments} authorizationStatus={authorizationStatus} />
         </Route>
         <Route>
           <ErrorPage />
