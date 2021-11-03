@@ -5,18 +5,13 @@ import {Offer} from '../../types/types';
 import Map from '../map/map';
 import { useState } from 'react';
 import {citiesCoordinates} from '../../const';
+import {MainPageProps} from '../main-wrapper/main-wrapper';
 
-type MainPageProps = {
-  offers: Offer[],
-  authorizationStatus: string,
-  selectedCity: string,
-}
-
-const center = citiesCoordinates.amsterdam;
 
 function MainPage({offers, authorizationStatus, selectedCity}: MainPageProps): JSX.Element {
 
-  const selectedCityOffers = offers.filter((offer) => offer.city.name === selectedCity);
+  const center = citiesCoordinates[selectedCity.toLowerCase()];
+
   const [activeOfferCard, setActiveOfferCard] = useState<Offer | null>(null);
 
   const handleActiveOfferSelect = (offer: Offer | null): void => {
@@ -31,13 +26,14 @@ function MainPage({offers, authorizationStatus, selectedCity}: MainPageProps): J
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <Locations selectedCity={selectedCity} />
+          <Locations />
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{selectedCityOffers.length} places to stay in {selectedCity}</b>
+              <b className="places__found">{offers.length} {offers.length > 1 ? 'places' : 'place'} to stay in {selectedCity}</b>
+
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -53,13 +49,14 @@ function MainPage({offers, authorizationStatus, selectedCity}: MainPageProps): J
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
+
               <div className="cities__places-list places__list tabs__content">
-                <OffersList handleActiveOfferSelect={handleActiveOfferSelect} offers={selectedCityOffers} />
+                <OffersList handleActiveOfferSelect={handleActiveOfferSelect} offers={offers} />
               </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city={center} offers={selectedCityOffers} activeOfferCard={activeOfferCard}/>
+                <Map city={center} offers={offers} activeOfferCard={activeOfferCard}/>
               </section>
             </div>
           </div>

@@ -3,6 +3,7 @@ import {AppRoute, AuthorizationStatus} from '../../const';
 import FavoriteCard from '../favorite-card/favorite-card';
 import HeaderPage from '../header-page/header-page';
 import {Offer} from '../../types/types';
+//import {FavoritesEmpty} from '../favorites-empty/favorites-empty';
 
 
 type FavoritesPageProps = {
