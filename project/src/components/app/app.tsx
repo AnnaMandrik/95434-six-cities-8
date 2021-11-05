@@ -13,10 +13,9 @@ type AppPageProps = {
   offers: Offer[],
   comments: Comment[],
   authorizationStatus: AuthorizationStatus,
-  city: string,
 }
 
-function App({offers, comments, authorizationStatus, city}: AppPageProps): JSX.Element {
+function App({offers, comments, authorizationStatus}: AppPageProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>

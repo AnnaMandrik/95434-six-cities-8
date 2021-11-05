@@ -16,6 +16,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 
 function Location ({city, selectedCity, onClickCity} : {city: string} & PropsFromRedux): JSX.Element {
+
   const onClick = (evt: MouseEvent) => {
     evt.preventDefault();
     onClickCity(city);
