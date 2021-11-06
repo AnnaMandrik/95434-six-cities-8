@@ -4,7 +4,7 @@ import HeaderPage from '../header-page/header-page';
 import FavoriteBtn from '../favorite-btn/favorite-btn';
 import OffersList from '../offers-list/offers-list';
 import {Offer, Comment} from '../../types/types';
-import {AuthorizationStatus, FavoriteBtnProp, citiesCoordinates} from '../../const';
+import {AuthorizationStatus, FavoriteBtnProp, CitiesCoordinates} from '../../const';
 import {createRating} from '../../utils/utils';
 import ErrorPage from '../error-page/error-page';
 import CommentAddForm from '../comment-add-form/comment-add-form';
@@ -47,7 +47,7 @@ function PropertyPage({offers, comments, authorizationStatus}: PropertyPageProps
   }
 
   const {price, title, rating, type, host, description, maxAdults, bedrooms, goods, images, isFavorite, isPremium} = exactOffer;
-  const cityCenter = citiesCoordinates[exactOffer.city.name.toLowerCase()];
+  const cityCenter = CitiesCoordinates[exactOffer.city.name.toLowerCase()];
   const neighbours = offers.filter((offer) => offer.city.name === exactOffer.city.name);
 
   return (

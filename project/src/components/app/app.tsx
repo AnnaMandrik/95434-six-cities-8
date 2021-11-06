@@ -13,15 +13,14 @@ type AppPageProps = {
   offers: Offer[],
   comments: Comment[],
   authorizationStatus: AuthorizationStatus,
-  city: string,
 }
 
-function App({offers, comments, authorizationStatus, city}: AppPageProps): JSX.Element {
+function App({offers, comments, authorizationStatus}: AppPageProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path ={AppRoute.Main}>
-          <MainWrapper offers={offers} authorizationStatus={authorizationStatus} />
+          <MainWrapper authorizationStatus={authorizationStatus} />
         </Route>
         <Route exact path ={AppRoute.Login}>
           <LoginPage />
