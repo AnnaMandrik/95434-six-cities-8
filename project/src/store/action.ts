@@ -1,6 +1,7 @@
 export enum ActionType {
   ChangeCity = 'city/ChangeCity',
-  GetOffersList = 'city/GetOffersList',
+  GetOffersList = 'offer/GetOffersList',
+  ChangeOptionSorting = 'option-sorting/ChangeOptionSorting',
 }
 
 export const changeCity = (city: string) => ({
@@ -13,5 +14,12 @@ export const getOffersList = (city: string) => ({
   payload: city,
 } as const);
 
+export const changeOptionSorting = (option: string) => ({
+  type: ActionType.ChangeOptionSorting,
+  payload: option,
+} as const);
 
-export type Actions = ReturnType<typeof changeCity> | ReturnType<typeof getOffersList>;
+
+export type Actions = ReturnType<typeof changeCity> |
+ReturnType<typeof getOffersList> |
+ReturnType<typeof changeOptionSorting>;

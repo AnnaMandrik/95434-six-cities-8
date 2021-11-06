@@ -28,7 +28,7 @@ const STARS = [
   {score: '1', titleName: 'terribly'},
 ];
 
-const citiesCoordinates: {[property: string]: PointInMap} = {
+const CitiesCoordinates: {[property: string]: PointInMap} = {
   amsterdam: {lat: 52.3809553943508, lng: 4.939309666406198},
   paris: {lat: 48.8534, lng: 2.3488},
   brussels: {lat: 50.8504, lng: 4.34878},
@@ -42,4 +42,12 @@ const enum IconMapColour {
   Active = './img/pin-active.svg',
 }
 
-export {IconMapColour, citiesCoordinates, STARS, FavoriteBtnProp, AppRoute, AuthorizationStatus, CITIES};
+const PlacesSortOptions: {[property: string]: string} = {
+  Popular: 'Popular',
+  PriceLowToHight:'Price: low to high',
+  PriceHightToLow: 'Price: high to low',
+  TopRated: 'Top rated first',
+};
+
+
+export {PlacesSortOptions, IconMapColour, CitiesCoordinates, STARS, FavoriteBtnProp, AppRoute, AuthorizationStatus, CITIES};

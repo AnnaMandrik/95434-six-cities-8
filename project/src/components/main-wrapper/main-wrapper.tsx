@@ -16,12 +16,6 @@ export type MainPageProps = {
 function MainWrapper({offers, authorizationStatus, selectedCity}: MainPageProps): JSX.Element {
 
   const selectedCityOffers = offers.filter((offer) => offer.city.name === selectedCity);
-  // const [activeOfferCard, setActiveOfferCard] = useState<Offer | null>(null);
-
-  // const handleActiveOfferSelect = (offer: Offer | null): void => {
-  //   setActiveOfferCard(offer);
-  // };
-
   return selectedCityOffers.length ?
     <MainPage offers={selectedCityOffers} authorizationStatus={authorizationStatus} selectedCity={selectedCity} /> :
     <MainEmpty authorizationStatus={authorizationStatus} selectedCity={selectedCity} />;
