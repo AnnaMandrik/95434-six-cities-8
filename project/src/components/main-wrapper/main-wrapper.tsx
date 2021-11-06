@@ -1,10 +1,11 @@
+import { connect } from 'react-redux';
 import MainPage from '../main-page/main-page';
 import MainEmpty from '../main-empty/main-empty';
 import {Offer} from '../../types/types';
-import { connect } from 'react-redux';
+
 import { State } from '../../store/reducer';
 
-const mapStateToProps = ({city}: State) => ({selectedCity: city});
+const mapStateToProps = ({city, offers}: State) => ({selectedCity: city, offers});
 
 export type MainPageProps = {
   offers: Offer[],

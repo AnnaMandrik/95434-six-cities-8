@@ -1,7 +1,7 @@
 import {CITIES} from '../../const';
 import { bindActionCreators, Dispatch } from 'redux';
 import { State } from '../../store/reducer';
-import {changeCity, getOffersList} from '../../store/action';
+import {changeCityAndOffers} from '../../store/action';
 import { connect, ConnectedProps } from 'react-redux';
 import { MouseEvent } from 'react';
 
@@ -9,7 +9,7 @@ import { MouseEvent } from 'react';
 const ACTIVE = 'tabs__item tabs__item--active';
 
 const mapStateToProps = ({city} : State) => ({selectedCity: city});
-const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({onClickCity: changeCity, getOffersList}, dispatch);
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({onClickCity: changeCityAndOffers}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;

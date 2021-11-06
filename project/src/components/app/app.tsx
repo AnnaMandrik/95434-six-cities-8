@@ -20,7 +20,7 @@ function App({offers, comments, authorizationStatus}: AppPageProps): JSX.Element
     <BrowserRouter>
       <Switch>
         <Route exact path ={AppRoute.Main}>
-          <MainWrapper offers={offers} authorizationStatus={authorizationStatus} />
+          <MainWrapper authorizationStatus={authorizationStatus} />
         </Route>
         <Route exact path ={AppRoute.Login}>
           <LoginPage />
