@@ -14,17 +14,18 @@ type FavoritesListProps = {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
-  bindActionCreators({onClickCity: changeCity, getOffersList}, dispatch);
+  bindActionCreators({onClickCity: changeCity, onClickCityOffers: getOffersList}, dispatch);
 const connector = connect(null, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 
-function FavoritesList({offers, city, onClickCity}: FavoritesListProps & PropsFromRedux): JSX.Element {
+function FavoritesList({offers, city, onClickCity, onClickCityOffers}: FavoritesListProps & PropsFromRedux): JSX.Element {
 
   const onClick = (evt: MouseEvent) => {
     evt.preventDefault();
     onClickCity(city);
+    onClickCityOffers(city);
   };
 
   return (

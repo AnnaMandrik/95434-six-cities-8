@@ -3,7 +3,7 @@ import  {PlacesSortOptions} from '../../const';
 
 import { useState } from 'react';
 import { connect } from 'react-redux';
-import { State } from '../../store/reducer';
+import { State } from '../../types/types';
 
 
 type SortingOptionListProps = {

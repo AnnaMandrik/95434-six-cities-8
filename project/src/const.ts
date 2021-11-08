@@ -49,5 +49,15 @@ const PlacesSortOptions: {[property: string]: string} = {
   TopRated: 'Top rated first',
 };
 
+const enum APIRoute {
+  Hotels = '/hotels',
+  Nearby = '/nearby',
+  Favorite = '/favorite',
+  Status = '/:status',
+  Comments = '/comments',
+  Login = '/login',
+  Logout = '/logout'
+}
 
-export {PlacesSortOptions, IconMapColour, CitiesCoordinates, STARS, FavoriteBtnProp, AppRoute, AuthorizationStatus, CITIES};
+
+export {APIRoute, PlacesSortOptions, IconMapColour, CitiesCoordinates, STARS, FavoriteBtnProp, AppRoute, AuthorizationStatus, CITIES};

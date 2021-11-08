@@ -1,5 +1,6 @@
+import {Link} from 'react-router-dom';
 import Header from '../header-page/header-page';
-import {AuthorizationStatus} from '../../const';
+import {AuthorizationStatus, AppRoute} from '../../const';
 
 function FavoritesEmpty(): JSX.Element {
   return (
@@ -18,10 +19,10 @@ function FavoritesEmpty(): JSX.Element {
           </section>
         </div>
       </main>
-      <footer className="footer">
-        <a className="footer__logo-link" href="main.html">
+      <footer className="footer container">
+        <Link className="footer__logo-link" to={AppRoute.Main}>
           <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />
-        </a>
+        </Link>
       </footer>
     </div>
 
