@@ -6,7 +6,8 @@ import ErrorPage from '../error-page/error-page';
 import FavoritesPage from '../favorites-page/favorites-page';
 import LoginPage from '../login-page/login-page';
 import PrivateRoute from '../private-route/private-route';
-import {Offer, Comment} from '../../types/types';
+import {Offer, Comment, State} from '../../types/types';
+import {connect} from 'react-redux';
 
 
 type AppPageProps = {
@@ -14,6 +15,8 @@ type AppPageProps = {
   comments: Comment[],
   authorizationStatus: AuthorizationStatus,
 }
+
+const mapStateToProps = ({loadOffers} : State) => ({offers: loadOffers});
 
 function App({offers, comments, authorizationStatus}: AppPageProps): JSX.Element {
   return (
@@ -42,4 +45,4 @@ function App({offers, comments, authorizationStatus}: AppPageProps): JSX.Element
   );
 }
 
-export default App;
+export default connect(mapStateToProps)(App);

@@ -132,7 +132,7 @@ function PropertyPage({offers, comments, authorizationStatus}: PropertyPageProps
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
                 <ReviewsList comments={comments}/>
 
-                {authorizationStatus === AuthorizationStatus.Auth ? <CommentAddForm /> : null}
+                {authorizationStatus === AuthorizationStatus.Auth && <CommentAddForm />}
 
               </section>
             </div>

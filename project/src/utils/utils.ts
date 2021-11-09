@@ -21,7 +21,7 @@ const createSortingOffers = (offers: Offer[], option: string): Offer[] => {
     case PlacesSortOptions.TopRated:
       return sortHighRated(offers);
     default:
-      return offers;
+      return [...offers];
   }
 };
 

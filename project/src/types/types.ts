@@ -1,17 +1,17 @@
-type Host = {
+export type Host = {
   avatarUrl: string,
   id: number,
   isPro: boolean,
   name: string,
 }
 
-type Location = {
+export type Location = {
   latitude: number,
   longitude: number,
   zoom: number,
 }
 
-type City = {
+export type City = {
   location: Location
   name: string,
 }
@@ -35,7 +35,7 @@ export type Offer = {
   type: string,
 }
 
-type User = {
+export type User = {
   avatarUrl: string,
   id: number,
   isPro: boolean,
@@ -59,4 +59,13 @@ export type ButtonFavorite = {
 export type PointInMap = {
   lat: number,
   lng: number,
+}
+
+
+export type State = {
+  city: string,
+  offers: Offer[],
+  activeOption: string,
+  loadOffers: Offer[],
+  isOffersLoaded: boolean,
 }
