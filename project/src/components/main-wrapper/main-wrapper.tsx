@@ -1,25 +1,22 @@
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import MainPage from '../main-page/main-page';
 import MainEmpty from '../main-empty/main-empty';
-import {Offer} from '../../types/types';
-import {State} from '../../types/types';
-import Spinner from '../spinner/spinner';
+import {Offer, State} from '../../types/types';
+import {AuthorizationStatus} from '../../const';
 
-const mapStateToProps = ({city, offers, isOffersLoaded}: State) => ({selectedCity: city, offers, isOffersLoaded});
+const mapStateToProps = ({city, offers}: State) => ({selectedCity: city, offers});
 
 export type MainPageProps = {
   offers: Offer[],
-  authorizationStatus: string,
+  authorizationStatus: AuthorizationStatus,
   selectedCity: string,
 }
 
 
-function MainWrapper({offers, authorizationStatus, selectedCity, isOffersLoaded}: MainPageProps & {isOffersLoaded: boolean}): JSX.Element {
+function MainWrapper({offers, authorizationStatus, selectedCity}: MainPageProps): JSX.Element {
 
-  if (!isOffersLoaded) {
-    return <Spinner/>;
-  }
   const selectedCityOffers = offers.filter((offer) => offer.city.name === selectedCity);
+
   return selectedCityOffers.length ?
     <MainPage offers={selectedCityOffers} authorizationStatus={authorizationStatus} selectedCity={selectedCity} /> :
     <MainEmpty authorizationStatus={authorizationStatus} selectedCity={selectedCity} />;

@@ -1,8 +1,34 @@
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {bindActionCreators, Dispatch} from 'redux';
+import {connect, ConnectedProps} from 'react-redux';
+import {Redirect} from 'react-router';
+import {changeCity, getOffersList} from '../../store/action';
+import {State} from '../../types/types';
+import {AppRoute, AuthorizationStatus, CITIES} from '../../const';
 import HeaderPage from '../header-page/header-page';
+import LoginForm from '../login-form/login-form';
 
-function LoginPage(): JSX.Element {
+
+const mapStateToProps = ({authorizationStatus} : State) => ({authorizationStatus});
+const mapDispatchToProps = (dispatch: Dispatch ) => bindActionCreators({onClickCity: changeCity, onClickCityOffers: getOffersList}, dispatch);
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+
+function LoginPage({onClickCity, onClickCityOffers, authorizationStatus}: PropsFromRedux): JSX.Element {
+
+  const randomCity = CITIES[Math.floor(Math.random()*CITIES.length)];
+
+  const handleRandomCityClick = () => {
+    onClickCity(randomCity);
+    onClickCityOffers(randomCity);
+  };
+
+  if (authorizationStatus === AuthorizationStatus.Auth) {
+    return <Redirect to={AppRoute.Main} />;
+  }
+
   return (
     <div className="page page--gray page--login">
       <HeaderPage />
@@ -10,22 +36,12 @@ function LoginPage(): JSX.Element {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" action="#" method="post">
-              <div className="login__input-wrapper form__input-wrapper">
-                <label className="visually-hidden">E-mail</label>
-                <input className="login__input form__input" type="email" name="email" placeholder="Email" required />
-              </div>
-              <div className="login__input-wrapper form__input-wrapper">
-                <label className="visually-hidden">Password</label>
-                <input className="login__input form__input" type="password" name="password" placeholder="Password" required />
-              </div>
-              <button className="login__submit form__submit button" type="submit">Sign in</button>
-            </form>
+            <LoginForm />
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to={AppRoute.Main}>
-                <span>Amsterdam</span>
+              <Link className="locations__item-link" to={AppRoute.Main} onClick={handleRandomCityClick}>
+                <span>{randomCity}</span>
               </Link>
             </div>
           </section>
@@ -35,4 +51,4 @@ function LoginPage(): JSX.Element {
   );
 }
 
-export default LoginPage;
+export default connector(LoginPage);

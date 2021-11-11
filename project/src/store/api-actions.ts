@@ -1,36 +1,12 @@
-import {getOffersList, Actions, loadOffers} from './action';
-import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { State} from '../types/types';
-import { AxiosInstance } from 'axios';
+import {getOffersList, loadOffers, loadOffer, requireAuthorization, requireLogout} from './action';
+import {ThunkActionResult, AuthData} from '../types/types';
 import {adaptOfferToClient} from '../services/adapter';
-// import { removeToken, saveToken } from '../services/token';
-import { store } from '../index';
-import { APIRoute } from '.././const';
+import {dropToken, saveToken} from '../services/token';
+import {store} from '../index';
+import {APIRoute, AuthorizationStatus} from '.././const';
+import {ServersOffer} from '../types/types';
+import {saveUserEmail, dropUserEmail} from '../services/user-email';
 
-import { City, Host } from '../types/types';
-
-export type ServersOffer = {
-  bedrooms: number,
-  city: City,
-  description: string,
-  goods: string[],
-  host: Host,
-  id: number,
-  images: string[],
-  'is_favorite': boolean,
-  'is_premium': boolean,
-  location: Location,
-  'max_adults': number,
-  'preview_image': string,
-  price: number,
-  rating: number,
-  title: string,
-  type: string,
-}
-
-export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
-
-export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;
 
 export const fetchOffersAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
@@ -38,4 +14,38 @@ export const fetchOffersAction = (): ThunkActionResult =>
     const entranceData = await data.map((offer: ServersOffer) => adaptOfferToClient(offer));
     dispatch(loadOffers(entranceData));
     dispatch(getOffersList(store.getState().city));
+  };
+
+export const fetchOffersByIdAction = (offerId: number): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const url = `${APIRoute.Hotels}/${offerId}`;
+    const {data} = await api.get(url);
+    const entranceData = adaptOfferToClient(data);
+    dispatch(loadOffer(entranceData));
+  };
+
+export const checkAuthAction = (): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    await api.get(APIRoute.Login)
+      .then(() => {
+        dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      });
+  };
+
+export const loginAction = ({email, password}: AuthData): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const answer = await api.post(APIRoute.Login, {email, password});
+    const {data} = answer;
+    saveToken(data.token);
+    saveUserEmail(data.email);
+    dispatch(requireAuthorization(AuthorizationStatus.Auth));
+  };
+
+
+export const logoutAction = (): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    await api.delete(APIRoute.Logout);
+    dropToken();
+    dropUserEmail();
+    dispatch(requireLogout());
   };

@@ -29,11 +29,11 @@ const STARS = [
 ];
 
 const CitiesCoordinates: {[property: string]: PointInMap} = {
-  amsterdam: {lat: 52.3809553943508, lng: 4.939309666406198},
+  amsterdam: {lat: 52.3809553943508, lng: 4.9},
   paris: {lat: 48.8534, lng: 2.3488},
   brussels: {lat: 50.8504, lng: 4.34878},
-  hamburg: {lat: 53.5753, lng: 10.0153},
-  cologne: {lat: 50.8936, lng: 7.0731},
+  hamburg: {lat: 53.55, lng: 10},
+  cologne: {lat: 50.936, lng: 6.95},
   dusseldorf: {lat: 51.2217, lng: 6.77616},
 };
 
@@ -59,5 +59,10 @@ const enum APIRoute {
   Logout = '/logout'
 }
 
+const ReviewTextLength = {
+  MAX: 300,
+  MIN: 50,
+};
 
-export {APIRoute, PlacesSortOptions, IconMapColour, CitiesCoordinates, STARS, FavoriteBtnProp, AppRoute, AuthorizationStatus, CITIES};
+
+export {ReviewTextLength, APIRoute, PlacesSortOptions, IconMapColour, CitiesCoordinates, STARS, FavoriteBtnProp, AppRoute, AuthorizationStatus, CITIES};

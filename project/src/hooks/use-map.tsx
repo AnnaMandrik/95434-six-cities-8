@@ -2,7 +2,7 @@ import { useEffect, useState, MutableRefObject } from 'react';
 import { Map, TileLayer} from 'leaflet';
 import {PointInMap} from '../types/types';
 
-const ZOOM = 10;
+const ZOOM = 13;
 const LAYER_TITLE = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
 const LAYER_ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 
