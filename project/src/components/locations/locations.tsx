@@ -1,9 +1,9 @@
-import {CITIES} from '../../const';
 import { bindActionCreators, Dispatch } from 'redux';
-import { State } from '../../types/types';
-import {changeCity, getOffersList} from '../../store/action';
 import { connect, ConnectedProps } from 'react-redux';
 import { MouseEvent } from 'react';
+import { State } from '../../types/types';
+import {changeCity, getOffersList} from '../../store/action';
+import {CITIES} from '../../const';
 
 
 const ACTIVE = 'tabs__item tabs__item--active';

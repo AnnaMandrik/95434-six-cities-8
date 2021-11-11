@@ -1,5 +1,10 @@
 import {Link} from 'react-router-dom';
+import {connect, ConnectedProps} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {getUserEmail} from '../../services/user-email';
 import {AppRoute, AuthorizationStatus} from '../../const';
+import {logoutAction} from '../../store/api-actions';
+import {ThunkAppDispatch} from '../../types/types';
 
 
 function LogoPage(): JSX.Element{
@@ -28,7 +33,14 @@ function NoAuthPage(): JSX.Element {
   );
 }
 
-function AuthPage(): JSX.Element {
+
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({onSignOutClick: logoutAction}, dispatch);
+const connector = connect(null, mapDispatchToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function AuthPage({onSignOutClick}: PropsFromRedux): JSX.Element {
+
+
   return(
     <nav className="header__nav">
       <ul className="header__nav-list">
@@ -36,11 +48,11 @@ function AuthPage(): JSX.Element {
           <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
             <div className="header__avatar-wrapper user__avatar-wrapper">
             </div>
-            <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+            <span className="header__user-name user__name">{getUserEmail()}</span>
           </Link>
         </li>
         <li className="header__nav-item">
-          <Link className="header__nav-link" to={AppRoute.Login}>
+          <Link className="header__nav-link" onClick={onSignOutClick} to={AppRoute.Login}>
             <span className="header__signout">Sign out</span>
           </Link>
         </li>
@@ -49,15 +61,17 @@ function AuthPage(): JSX.Element {
   );
 }
 
+const AuthPageWithReduxProps = connector(AuthPage);
+
 function HeaderPage({authorizationStatus}: {authorizationStatus?: string}): JSX.Element{
-  let loginBlock = authorizationStatus === AuthorizationStatus.Auth ? <AuthPage /> : <NoAuthPage />;
-  loginBlock = window.location.pathname === AppRoute.Login ? <span></span> : loginBlock;
+  let loginComponent = authorizationStatus === AuthorizationStatus.Auth ? <AuthPageWithReduxProps /> : <NoAuthPage />;
+  loginComponent = window.location.pathname === AppRoute.Login ? <span></span> : loginComponent;
   return(
     <header className="header">
       <div className="container">
         <div className="header__wrapper">
           <LogoPage />
-          {loginBlock}
+          {loginComponent}
         </div>
       </div>
     </header>

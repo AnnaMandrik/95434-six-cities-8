@@ -1,5 +1,6 @@
 import {ChangeEvent, FormEvent, useState} from 'react';
 import {STARS} from '../../const';
+import {blockedReviewSubmit} from '../../utils/utils';
 
 type RatingStarProps = {
   star: {score: string, titleName: string},
@@ -34,6 +35,8 @@ function CommentAddForm(): JSX.Element {
   const [review, setReview] = useState('');
   const [starsCount, setStarsCount] = useState('');
 
+  const blockedState = blockedReviewSubmit(starsCount, review);
+
   return(
     <form className="reviews__form form" action="#" method="post"
       onSubmit={(evt: FormEvent<HTMLFormElement>) => {
@@ -63,7 +66,7 @@ function CommentAddForm(): JSX.Element {
         <p className="reviews__help">
         To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={blockedState}>Submit</button>
       </div>
     </form>
   );

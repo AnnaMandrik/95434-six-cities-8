@@ -1,13 +1,14 @@
 import {Offer} from '../types/types';
+import {AuthorizationStatus} from '../const';
 
 export enum ActionType {
   ChangeCity = 'city/ChangeCity',
   GetOffersList = 'offer/GetOffersList',
   ChangeOptionSorting = 'option-sorting/ChangeOptionSorting',
-  LoadOffers = 'data/offers/LoadOffers',
-  LoadOffer = 'data/offer/LoadOffer',
-  LoadComments = 'data/comments/LoadComments',
-  Login = 'user/Login',
+  LoadOffers = 'data/main/offers/LoadOffers',
+  LoadOffer = 'data/room/offer/LoadOffer',
+  LoadComments = 'data/room/comments/LoadComments',
+  RequireAuthorization = 'user/requireAuthorization',
   Logout = 'user/Logout',
 }
 
@@ -36,13 +37,18 @@ export const loadOffer = (offers: Offer) => ({
   payload: offers,
 } as const);
 
-export const requireLogin = () => ({type: ActionType.Login} as const);
+export const requireAuthorization = (authStatus: AuthorizationStatus) => ({
+  type: ActionType.RequireAuthorization,
+  payload: authStatus,
+} as const);
 
-export const requireLogout = () => ({type: ActionType.Logout} as const);
+export const requireLogout = () => ({
+  type: ActionType.Logout,
+} as const);
 
 
 export type Actions =
-ReturnType<typeof requireLogin> |
+ReturnType<typeof requireAuthorization> |
 ReturnType<typeof requireLogout> |
 ReturnType<typeof changeCity> |
 ReturnType<typeof getOffersList> |
