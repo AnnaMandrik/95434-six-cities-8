@@ -5,7 +5,8 @@ const enum AppRoute {
 Main = '/',
 Login = '/login',
 Favorites = '/favorites',
-Property = '/offer/:id'
+Property = '/offer/:id',
+Error = '/error',
 }
 
 const enum AuthorizationStatus {
@@ -21,11 +22,11 @@ const FavoriteBtnProp = {
 };
 
 const STARS = [
-  {score: '5', titleName: 'perfect'},
-  {score: '4', titleName: 'good'},
-  {score: '3', titleName: 'not bad'},
-  {score: '2', titleName: 'badly'},
-  {score: '1', titleName: 'terribly'},
+  {score: 5, titleName: 'perfect'},
+  {score: 4, titleName: 'good'},
+  {score: 3, titleName: 'not bad'},
+  {score: 2, titleName: 'badly'},
+  {score: 1, titleName: 'terribly'},
 ];
 
 const CitiesCoordinates: {[property: string]: PointInMap} = {
@@ -64,5 +65,10 @@ const ReviewTextLength = {
   MIN: 50,
 };
 
+const enum ErrorLoadingState {
+  Error = 'Error',
+  Loading = 'Loading',
+}
 
-export {ReviewTextLength, APIRoute, PlacesSortOptions, IconMapColour, CitiesCoordinates, STARS, FavoriteBtnProp, AppRoute, AuthorizationStatus, CITIES};
+
+export {ErrorLoadingState, ReviewTextLength, APIRoute, PlacesSortOptions, IconMapColour, CitiesCoordinates, STARS, FavoriteBtnProp, AppRoute, AuthorizationStatus, CITIES};

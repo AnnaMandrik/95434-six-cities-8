@@ -1,7 +1,7 @@
 import { bindActionCreators, Dispatch } from 'redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { State } from '../../types/types';
 import {changeOptionSorting} from '../../store/action';
-import { connect, ConnectedProps } from 'react-redux';
 
 type SortingOptionItemProps = {
   option: string,

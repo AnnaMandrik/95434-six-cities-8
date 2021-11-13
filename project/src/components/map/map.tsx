@@ -8,7 +8,7 @@ import {IconMapColour} from '../../const';
 type MapProps = {
   city: PointInMap,
   offers: Offer[],
-  activeOfferCard: Offer | null;
+  activeOfferCard: Offer | null | number;
 }
 
 const getOfferIcon = (iconUrl: string) => new Icon(
@@ -33,7 +33,7 @@ function Map(props: MapProps): JSX.Element {
       offers.forEach((offer) => {
         const [lat, lng] = [offer.location.latitude, offer.location.longitude];
         const marker = new Marker({lat, lng});
-        marker.setIcon(activeOfferCard !== null && activeOfferCard.id === offer.id ? activeIcon : defaultIcon);
+        marker.setIcon(activeOfferCard !== null && activeOfferCard === offer.id ? activeIcon : defaultIcon);
         marker.addTo(markerGroup);
       });
       markerGroup.addTo(map);

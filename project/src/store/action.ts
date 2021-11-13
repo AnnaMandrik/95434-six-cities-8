@@ -1,15 +1,18 @@
-import {Offer} from '../types/types';
+import {Offer, Comment} from '../types/types';
 import {AuthorizationStatus} from '../const';
 
 export enum ActionType {
-  ChangeCity = 'city/ChangeCity',
-  GetOffersList = 'offer/GetOffersList',
-  ChangeOptionSorting = 'option-sorting/ChangeOptionSorting',
+  ChangeCity = 'main/city/ChangeCity',
+  GetOffersList = 'main/offer/GetOffersList',
+  ChangeOptionSorting = 'main/option-sorting/ChangeOptionSorting',
   LoadOffers = 'data/main/offers/LoadOffers',
   LoadOffer = 'data/room/offer/LoadOffer',
   LoadComments = 'data/room/comments/LoadComments',
+  LoadNeighbours = 'data/room/offers/LoadNeighbours',
   RequireAuthorization = 'user/requireAuthorization',
   Logout = 'user/Logout',
+  ErrorPage = 'error404/ErrorPage',
+  ClearOffer = 'room/offer/ClearOffer',
 }
 
 export const changeCity = (city: string) => ({
@@ -37,6 +40,16 @@ export const loadOffer = (offers: Offer) => ({
   payload: offers,
 } as const);
 
+export const loadComments = (comments: Comment[]) => ({
+  type: ActionType.LoadComments,
+  payload: comments,
+} as const);
+
+export const loadNeighbours = (offers: Offer[]) => ({
+  type: ActionType.LoadNeighbours,
+  payload: offers,
+} as const);
+
 export const requireAuthorization = (authStatus: AuthorizationStatus) => ({
   type: ActionType.RequireAuthorization,
   payload: authStatus,
@@ -44,6 +57,14 @@ export const requireAuthorization = (authStatus: AuthorizationStatus) => ({
 
 export const requireLogout = () => ({
   type: ActionType.Logout,
+} as const);
+
+export const errorPage = () => ({
+  type: ActionType.ErrorPage,
+} as const);
+
+export const clearOffer = () => ({
+  type: ActionType.ClearOffer,
 } as const);
 
 
@@ -54,4 +75,10 @@ ReturnType<typeof changeCity> |
 ReturnType<typeof getOffersList> |
 ReturnType<typeof changeOptionSorting> |
 ReturnType<typeof loadOffers> |
-ReturnType<typeof loadOffer>;
+ReturnType<typeof loadOffer> |
+ReturnType<typeof loadComments> |
+ReturnType<typeof loadNeighbours> |
+ReturnType<typeof errorPage> |
+ReturnType<typeof clearOffer>;
+
+

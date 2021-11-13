@@ -19,10 +19,6 @@ function OfferCard({offer, ...styleProps}: OfferCardProps): JSX.Element {
 
   const {price, title, previewImage, rating, type, id, isFavorite, isPremium} = offer;
   const {cardInfoStyle, cardWrapperStyle, cardImageWidth, cardImageHeight} = styleProps;
-  // const cardInfoStyle = typeCard === TypeOfferCard.Main ? '' : 'favorites__card-info';
-  // const cardWrapperStyle = typeCard === TypeOfferCard.Main ? 'cities__image-wrapper' : 'favorites__image-wrapper';
-  // const [cardImageWidth, cardImageHeight] = typeCard === TypeOfferCard.Main ? ['260', '200'] : ['150', '110'];
-
 
   return (
     <>

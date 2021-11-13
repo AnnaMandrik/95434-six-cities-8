@@ -8,11 +8,12 @@ const TOKEN_HEADERS = 'X-Token';
 
 enum HttpCode {
   Unauthorized = 401,
+  Error = 404,
 }
 
 type UnauthorizedCallback = () => void;
 
-export const createAPI = (onUnauthorized: UnauthorizedCallback): AxiosInstance => {
+export const createAPI = (onUnauthorized: UnauthorizedCallback, onError: UnauthorizedCallback): AxiosInstance => {
   const api = axios.create({
     baseURL: BASE_URL,
     timeout: REQUEST_TIMEOUT,
@@ -26,6 +27,10 @@ export const createAPI = (onUnauthorized: UnauthorizedCallback): AxiosInstance =
 
       if (response?.status === HttpCode.Unauthorized) {
         onUnauthorized();
+      }
+
+      if (response?.status === HttpCode.Error) {
+        onError();
       }
 
       return Promise.reject(error);

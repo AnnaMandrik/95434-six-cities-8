@@ -1,11 +1,11 @@
 import {Offer} from '../types/types';
-import {PlacesSortOptions, ReviewTextLength} from '../const';
+import {PlacesSortOptions, ReviewTextLength, CITIES} from '../const';
 
 const RATING_COEFF = 100/5;   //100% на 5 звезд
 
 const createRating = (rating: number): string => `${Math.round(rating) * RATING_COEFF}%`;
 
-const blockedReviewSubmit = (star: string, text: string): boolean => {
+const blockedReviewLengthSubmit = (star: number, text: string): boolean => {
   const length = text.length;
   return !(star && length <= ReviewTextLength.MAX && length >= ReviewTextLength.MIN);
 };
@@ -44,4 +44,7 @@ const checkEmail = (email: string): boolean => Re.EMAIL.test(String(email).toLow
 const disableSignInSubmit = (email: string, password: string): boolean => !checkEmail(email) || !checkPassword(password);
 
 
-export {checkEmail, checkPassword, disableSignInSubmit, blockedReviewSubmit, createSortingOffers, createRating, getOffersByCityName};
+const randomCity = CITIES[Math.floor(Math.random()*CITIES.length)];
+
+
+export {randomCity, checkEmail, checkPassword, disableSignInSubmit, blockedReviewLengthSubmit, createSortingOffers, createRating, getOffersByCityName};
