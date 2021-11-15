@@ -16,10 +16,16 @@ NoAuth = 'NO_AUTH',
 
 const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
+const enum OffersButtonType {
+  Property = 'Property',
+  Card = 'Card',
+}
+
 const FavoriteBtnProp = {
-  CARD: {className: 'place-card', width: '18', height: '19'},
-  PROPERTY: {className: 'property', width: '31', height: '33'},
+  Card: {className: 'place-card', width: '18', height: '19', type: OffersButtonType.Card},
+  Property: {className: 'property', width: '31', height: '33', type: OffersButtonType.Property},
 };
+
 
 const STARS = [
   {score: 5, titleName: 'perfect'},
@@ -91,4 +97,4 @@ const offerTypeToReadable = {
 
 export {OfferType, MIX_COUNT_IMG, offerTypeToReadable, MAX_COUNT_IMG, ErrorLoadingOkState,
   ReviewTextLength, APIRoute, PlacesSortOptions, IconMapColour, CitiesCoordinates, STARS,
-  FavoriteBtnProp, AppRoute, AuthorizationStatus, CITIES};
+  FavoriteBtnProp, AppRoute, AuthorizationStatus, CITIES, OffersButtonType};

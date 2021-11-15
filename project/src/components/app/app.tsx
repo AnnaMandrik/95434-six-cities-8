@@ -7,19 +7,18 @@ import ErrorPage from '../error-page/error-page';
 import FavoritesPage from '../favorites-page/favorites-page';
 import LoginPage from '../login-page/login-page';
 import PrivateRoute from '../private-route/private-route';
-import {Offer, State} from '../../types/types';
+import {State} from '../../types/types';
 import Spinner from '../spinner/spinner';
 
 
 type AppPageProps = {
-  offers: Offer[],
   authorizationStatus: AuthorizationStatus,
   isLoaded: boolean,
 }
 
-const mapStateToProps = ({loadOffers, authorizationStatus, isLoaded} : State) => ({offers: loadOffers, authorizationStatus, isLoaded});
+const mapStateToProps = ({isLoaded, authorizationStatus, dataState} : State) => ({isLoaded, authorizationStatus, dataState});
 
-function App({offers, authorizationStatus, isLoaded}: AppPageProps): JSX.Element {
+function App({authorizationStatus, isLoaded}: AppPageProps): JSX.Element {
 
   if (!isLoaded) {
     return <Spinner/>;

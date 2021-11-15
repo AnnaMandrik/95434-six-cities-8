@@ -84,7 +84,7 @@ type CommentsArguments = {
 
 export const postCommentAction = ({offerId, review, rating, clearComment, notifyError, unblockForm}: CommentsArguments): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    await api.post<Comment[]>(`${APIRoute.Comments}/${offerId*1000}`, {comment: review, rating})
+    await api.post<Comment[]>(`${APIRoute.Comments}/${offerId}`, {comment: review, rating})
       .then((result) => {
         const {data} = result;
         const outgoingComment = data.map((someComment) => adaptCommentToClient(someComment));
@@ -103,10 +103,12 @@ export const fetchFavoriteOffersAction = (): ThunkActionResult =>
     dispatch(loadFavoriteOffers(userOffers));
   };
 
-export const postFavoriteStatus = (offerId: number, status: number): ThunkActionResult =>
+export const postFavoriteStatus = (offerId: number, status: number, propertyId = 0): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     await api.post(`${APIRoute.Favorite}/${offerId}/${status}`);
     dispatch(fetchOffersAction());
-    dispatch(fetchOfferByIdAction(offerId, false));
+    if (propertyId) {
+      dispatch(fetchOfferByIdAction(propertyId, false));
+    }
     dispatch(fetchFavoriteOffersAction());
   };

@@ -6,19 +6,19 @@ import {fetchNeighborsOffersAction} from '../../store/api-actions';
 import {State, ThunkAppDispatch} from '../../types/types';
 
 
-const mapStateToProps = ({neighboursOffer} : State) => ({neighbours: neighboursOffer});
+const mapStateToProps = ({neighboursOffer, favoriteOffers} : State) => ({neighbours: neighboursOffer, favoriteOffers});
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({getNeighbours: fetchNeighborsOffersAction}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>
 
-function OfferNeighbour ({id, neighbours, getNeighbours} : {id: number} & PropsFromRedux): JSX.Element {
+function OfferNeighbour ({id, neighbours, neighbourId, favoriteOffers,getNeighbours} : {id: number, neighbourId: number} & PropsFromRedux): JSX.Element {
 
   useEffect(() => {
     getNeighbours(id);
-  }, [id, getNeighbours]);
+  }, [id, getNeighbours, favoriteOffers]);
 
-  const neighbourOffer = neighbours.map((neighbour) => <OfferRoomCard offer={neighbour} key={neighbour.id}/>);
+  const neighbourOffer = neighbours.map((neighbour) => <OfferRoomCard offer={neighbour} key={neighbour.id} neighbourId={neighbourId} />);
 
   return (
     <section className="near-places places">

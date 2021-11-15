@@ -90,7 +90,7 @@ function PropertyPage({authorizationStatus, neighbours, offer, comments,  dataSt
                   {title}
                 </h1>
 
-                <FavoriteBtn isFavorite={isFavorite} offerId={id} btn={FavoriteBtnProp.PROPERTY} />
+                <FavoriteBtn isFavorite={isFavorite} offerId={offer.id} btnFavorite={FavoriteBtnProp.Property} neighbourId={0} />
 
               </div>
               <div className="property__rating rating">
@@ -156,7 +156,7 @@ function PropertyPage({authorizationStatus, neighbours, offer, comments,  dataSt
           </section>
         </section>
         <div className="container">
-          <OfferNeighbour id={id} />
+          <OfferNeighbour id={offer.id} neighbourId={offer.id} />
         </div>
       </main>
     </div>

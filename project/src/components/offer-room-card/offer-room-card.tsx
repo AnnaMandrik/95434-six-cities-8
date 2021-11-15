@@ -8,11 +8,11 @@ const [cardImageWidth, cardImageHeight] = ['260', '200'];
 const styleProps = {cardInfoStyle, cardWrapperStyle, cardImageWidth, cardImageHeight};
 
 
-function OfferRoomCard({offer}: {offer: Offer}): JSX.Element {
+function OfferRoomCard({offer, neighbourId}: {offer: Offer, neighbourId: number}): JSX.Element {
 
   return (
     <article className="cities__place-card place-card">
-      <OfferCard offer={offer} {...styleProps}/>
+      <OfferCard offer={offer} {...styleProps} neighbourId={neighbourId} />
     </article>
   );
 }

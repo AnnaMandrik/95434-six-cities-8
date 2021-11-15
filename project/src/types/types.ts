@@ -1,6 +1,6 @@
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {AxiosInstance} from 'axios';
-import {AuthorizationStatus, ErrorLoadingOkState, OfferType} from '../const';
+import {AuthorizationStatus, ErrorLoadingOkState, OfferType, OffersButtonType} from '../const';
 import {Actions} from '../store/action';
 
 
@@ -51,6 +51,7 @@ export type ButtonFavorite = {
   className: string,
   width: string,
   height: string,
+  type: OffersButtonType,
 };
 
 export type PointInMap = {
