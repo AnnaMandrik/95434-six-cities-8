@@ -1,5 +1,5 @@
 import {Offer, Comment} from '../types/types';
-import {AuthorizationStatus} from '../const';
+import {AuthorizationStatus, ErrorLoadingOkState} from '../const';
 
 export enum ActionType {
   ChangeCity = 'main/city/ChangeCity',
@@ -9,10 +9,11 @@ export enum ActionType {
   LoadOffer = 'data/room/offer/LoadOffer',
   LoadComments = 'data/room/comments/LoadComments',
   LoadNeighbours = 'data/room/offers/LoadNeighbours',
+  LoadFavoriteOffers = 'data/favorite/offers/LoadFavoriteOffers',
   RequireAuthorization = 'user/requireAuthorization',
   Logout = 'user/Logout',
   ErrorPage = 'error404/ErrorPage',
-  ClearOffer = 'room/offer/ClearOffer',
+  DataStatus = 'room/DataStatus',
 }
 
 export const changeCity = (city: string) => ({
@@ -50,6 +51,11 @@ export const loadNeighbours = (offers: Offer[]) => ({
   payload: offers,
 } as const);
 
+export const loadFavoriteOffers = (offers: Offer[]) => ({
+  type: ActionType.LoadFavoriteOffers,
+  payload: offers,
+} as const);
+
 export const requireAuthorization = (authStatus: AuthorizationStatus) => ({
   type: ActionType.RequireAuthorization,
   payload: authStatus,
@@ -63,8 +69,9 @@ export const errorPage = () => ({
   type: ActionType.ErrorPage,
 } as const);
 
-export const clearOffer = () => ({
-  type: ActionType.ClearOffer,
+export const dataStatus = (status: ErrorLoadingOkState) => ({
+  type: ActionType.DataStatus,
+  payload: status,
 } as const);
 
 
@@ -78,7 +85,8 @@ ReturnType<typeof loadOffers> |
 ReturnType<typeof loadOffer> |
 ReturnType<typeof loadComments> |
 ReturnType<typeof loadNeighbours> |
+ReturnType<typeof loadFavoriteOffers> |
 ReturnType<typeof errorPage> |
-ReturnType<typeof clearOffer>;
+ReturnType<typeof dataStatus>;
 
 

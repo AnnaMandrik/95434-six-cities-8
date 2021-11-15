@@ -1,10 +1,11 @@
-import {getOffersList, loadOffers, loadOffer, requireAuthorization, requireLogout, loadNeighbours, loadComments, clearOffer} from './action';
-import {ThunkActionResult, AuthData} from '../types/types';
+import {getOffersList, loadOffers, loadOffer, requireAuthorization,
+  requireLogout, loadNeighbours, loadComments, dataStatus,
+  loadFavoriteOffers} from './action';
+import {ThunkActionResult, AuthData, Offer, Comment} from '../types/types';
 import {adaptOfferToClient, adaptCommentToClient} from '../services/adapter';
 import {dropToken, saveToken} from '../services/token';
 import {store} from '../index';
-import {APIRoute, AuthorizationStatus} from '.././const';
-import {Offer, Comment} from '../types/types';
+import {APIRoute, AuthorizationStatus, ErrorLoadingOkState} from '.././const';
 import {saveUserEmail, dropUserEmail} from '../services/user-email';
 
 
@@ -51,12 +52,15 @@ export const fetchNeighborsOffersAction = (offerId: number): ThunkActionResult =
   };
 
 
-export const fetchOfferByIdAction = (offerId: number): ThunkActionResult =>
+export const fetchOfferByIdAction = (offerId: number, cleanStatus: boolean): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    dispatch(clearOffer());
+    if (cleanStatus === true) {
+      dispatch(dataStatus(ErrorLoadingOkState.Loading));
+    }
     const url = `${APIRoute.Hotels}/${offerId}`;
     const {data} = await api.get(url);
     const entranceData = adaptOfferToClient(data);
+    dispatch(dataStatus(ErrorLoadingOkState.Ok));
     dispatch(loadOffer(entranceData));
   };
 
@@ -80,13 +84,29 @@ type CommentsArguments = {
 
 export const postCommentAction = ({offerId, review, rating, clearComment, notifyError, unblockForm}: CommentsArguments): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    await api.post<Comment[]>(`${APIRoute.Comments}/${offerId}`, {comment: review, rating})
+    await api.post<Comment[]>(`${APIRoute.Comments}/${offerId*1000}`, {comment: review, rating})
       .then((result) => {
         const {data} = result;
-        const outgoingComment = data.map((serverComment) => adaptCommentToClient(serverComment));
+        const outgoingComment = data.map((someComment) => adaptCommentToClient(someComment));
         dispatch(loadComments(outgoingComment));
         clearComment();
       })
       .catch(notifyError)
       .finally(unblockForm);
+  };
+
+
+export const fetchFavoriteOffersAction = (): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    const {data} = await api.get<Offer[]>(APIRoute.Favorite);
+    const userOffers = await data.map((someOffer) => adaptOfferToClient(someOffer));
+    dispatch(loadFavoriteOffers(userOffers));
+  };
+
+export const postFavoriteStatus = (offerId: number, status: number): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    await api.post(`${APIRoute.Favorite}/${offerId}/${status}`);
+    dispatch(fetchOffersAction());
+    dispatch(fetchOfferByIdAction(offerId, false));
+    dispatch(fetchFavoriteOffersAction());
   };

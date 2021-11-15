@@ -65,10 +65,30 @@ const ReviewTextLength = {
   MIN: 50,
 };
 
-const enum ErrorLoadingState {
+const enum ErrorLoadingOkState {
   Error = 'Error',
   Loading = 'Loading',
+  Ok = 'Ok',
 }
 
+const MIX_COUNT_IMG = 0;
+const MAX_COUNT_IMG = 6;
 
-export {ErrorLoadingState, ReviewTextLength, APIRoute, PlacesSortOptions, IconMapColour, CitiesCoordinates, STARS, FavoriteBtnProp, AppRoute, AuthorizationStatus, CITIES};
+const enum OfferType {
+  Apartment = 'apartment',
+  Room = 'room',
+  House = 'house',
+  Hotel = 'hotel',
+}
+
+const offerTypeToReadable = {
+  [OfferType.Apartment]: 'Apartment',
+  [OfferType.Room]: 'Room',
+  [OfferType.House]: 'House',
+  [OfferType.Hotel]: 'Hotel',
+};
+
+
+export {OfferType, MIX_COUNT_IMG, offerTypeToReadable, MAX_COUNT_IMG, ErrorLoadingOkState,
+  ReviewTextLength, APIRoute, PlacesSortOptions, IconMapColour, CitiesCoordinates, STARS,
+  FavoriteBtnProp, AppRoute, AuthorizationStatus, CITIES};

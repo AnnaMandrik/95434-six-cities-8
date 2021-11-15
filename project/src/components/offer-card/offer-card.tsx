@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom';
 import {Offer} from '../../types/types';
 import {createRating} from '../../utils/utils';
 import FavoriteBtn from '../favorite-btn/favorite-btn';
-import {FavoriteBtnProp} from '../../const';
+import {FavoriteBtnProp, offerTypeToReadable} from '../../const';
 
 const OFFER_WAY = '/offer/';
 
@@ -39,7 +39,7 @@ function OfferCard({offer, ...styleProps}: OfferCardProps): JSX.Element {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
 
-          <FavoriteBtn isFavorite={isFavorite} btn={FavoriteBtnProp.CARD}/>
+          <FavoriteBtn isFavorite={isFavorite} offerId={id} btn={FavoriteBtnProp.CARD}/>
 
         </div>
         <div className="place-card__rating rating">
@@ -51,7 +51,7 @@ function OfferCard({offer, ...styleProps}: OfferCardProps): JSX.Element {
         <h2 className="place-card__name">
           <Link to={`${OFFER_WAY}${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{offerTypeToReadable[type]}</p>
       </div>
     </>
   );

@@ -13,6 +13,7 @@ export const adaptOfferToClient = (offer: any): Offer => {
       host: {
         isPro: offer.host.is_pro,
         avatarUrl: offer.host.avatar_url,
+        name: offer.host.name,
       },
     },
   );
@@ -23,6 +24,7 @@ export const adaptOfferToClient = (offer: any): Offer => {
   delete adaptedOffer.max_adults;
   delete adaptedOffer.preview_image;
   delete adaptedOffer.host.avatar_url;
+  delete adaptedOffer.host.name;
 
   return adaptedOffer;
 };
@@ -36,12 +38,14 @@ export const adaptCommentToClient = (comment: any): Comment => {
       user: {
         isPro: comment.user.is_pro,
         avatarUrl: comment.user.avatar_url,
+        name: comment.user.name,
       },
     },
   );
 
   delete adaptedComent.user.is_pro;
   delete adaptedComent.user.avatar_url;
+  delete adaptedComent.user.name;
 
   return adaptedComent;
 };

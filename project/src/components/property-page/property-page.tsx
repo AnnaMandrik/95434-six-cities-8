@@ -4,8 +4,9 @@ import {bindActionCreators} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
 import HeaderPage from '../header-page/header-page';
 import FavoriteBtn from '../favorite-btn/favorite-btn';
-import {Offer, Comment, ThunkAppDispatch} from '../../types/types';
-import {AuthorizationStatus, FavoriteBtnProp, ErrorLoadingState} from '../../const';
+import {State, ThunkAppDispatch} from '../../types/types';
+import {AuthorizationStatus, FavoriteBtnProp, ErrorLoadingOkState,
+  MIX_COUNT_IMG, MAX_COUNT_IMG, offerTypeToReadable} from '../../const';
 import {createRating} from '../../utils/utils';
 import ErrorPage from '../error-page/error-page';
 import CommentAddForm from '../comment-add-form/comment-add-form';
@@ -29,29 +30,29 @@ function FeatureInside({featureName}: {featureName: string}) {
   return <li className="property__inside-item">{featureName}</li>;
 }
 
-const mapStateToProps = ({offer, comments, neighboursOffer} :
-  {neighboursOffer: Offer[], offer: Offer | ErrorLoadingState, comments: Comment[]}) =>
-  ({neighbours: neighboursOffer, offer, comments});
+const mapStateToProps = ({neighboursOffer, offer, comments, dataState} : State) =>
+  ({neighbours: neighboursOffer, offer, comments, dataState});
+
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({loadOffer: fetchOfferByIdAction}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>
 
 
-function PropertyPage({authorizationStatus, neighbours, offer, comments, loadOffer}:{authorizationStatus: AuthorizationStatus} & PropsFromRedux): JSX.Element {
+function PropertyPage({authorizationStatus, neighbours, offer, comments,  dataState, loadOffer}:{authorizationStatus: AuthorizationStatus} & PropsFromRedux): JSX.Element {
 
 
   const params: {id: string} = useParams();
   const id = +params.id;
 
   useEffect(() => {
-    loadOffer(id);
+    loadOffer(id, true);
   }, [id, loadOffer]);
 
-  if (offer === ErrorLoadingState.Error) {
+  if (dataState === ErrorLoadingOkState.Error) {
     return <ErrorPage />;
   }
 
-  if (offer === ErrorLoadingState.Loading) {
+  if (dataState === ErrorLoadingOkState.Loading || !offer) {
     return <Spinner />;
   }
 
@@ -72,7 +73,7 @@ function PropertyPage({authorizationStatus, neighbours, offer, comments, loadOff
           <div className="property__gallery-container container">
             <div className="property__gallery">
 
-              {images.map((image: string) => <PropertyPicture src={image} key={image} />)}
+              {images.slice(MIX_COUNT_IMG, MAX_COUNT_IMG).map((image: string) => <PropertyPicture src={image} key={image} />)}
 
             </div>
           </div>
@@ -89,7 +90,7 @@ function PropertyPage({authorizationStatus, neighbours, offer, comments, loadOff
                   {title}
                 </h1>
 
-                <FavoriteBtn isFavorite={isFavorite}  btn={FavoriteBtnProp.PROPERTY} />
+                <FavoriteBtn isFavorite={isFavorite} offerId={id} btn={FavoriteBtnProp.PROPERTY} />
 
               </div>
               <div className="property__rating rating">
@@ -101,7 +102,7 @@ function PropertyPage({authorizationStatus, neighbours, offer, comments, loadOff
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {type}
+                  {offerTypeToReadable[type]}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
                   {bedrooms} Badrooms
@@ -151,7 +152,7 @@ function PropertyPage({authorizationStatus, neighbours, offer, comments, loadOff
             </div>
           </div>
           <section className="property__map map">
-            <Map city={cityCenter} offers={offersMarkersForMap} activeOfferCard={offer.id}/>
+            <Map city={cityCenter} offers={offersMarkersForMap} activeOfferCard={offer} currentOfferCard={offer.id} />
           </section>
         </section>
         <div className="container">

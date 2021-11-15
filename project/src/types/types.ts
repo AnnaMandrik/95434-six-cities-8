@@ -1,6 +1,6 @@
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {AxiosInstance} from 'axios';
-import {AuthorizationStatus, ErrorLoadingState} from '../const';
+import {AuthorizationStatus, ErrorLoadingOkState, OfferType} from '../const';
 import {Actions} from '../store/action';
 
 
@@ -20,7 +20,7 @@ export type Location = {
 export type Offer = {
   bedrooms: number,
   city: {
-    location: Location
+    location: Location,
     name: string,
   },
   description: string,
@@ -36,7 +36,7 @@ export type Offer = {
   price: number,
   rating: number,
   title: string,
-  type: string,
+  type: OfferType,
 }
 
 export type Comment = {
@@ -62,7 +62,7 @@ export type PointInMap = {
 export type State = {
   city: string,
   offers: Offer[],
-  offer: Offer | ErrorLoadingState,
+  offer: Offer | null,
   activeOption: string,
   loadOffers: Offer[],
   isLoaded: boolean,
@@ -70,6 +70,9 @@ export type State = {
   mainOffers: Offer[],
   comments: Comment[],
   neighboursOffer: Offer[],
+  favoriteOffers: Offer[],
+  isLoadedFavorite: boolean,
+  dataState: ErrorLoadingOkState,
 }
 
 

@@ -1,20 +1,27 @@
-import {Offer} from '../../types/types';
+import {useEffect} from 'react';
+import { bindActionCreators } from 'redux';
+import { connect, ConnectedProps } from 'react-redux';
+import {Offer, ThunkAppDispatch} from '../../types/types';
 import FavoritesEmpty from '../favorites-empty/favorites-empty';
 import FavoritesFilled from '../favorites-filled/favorites-filled';
+import {fetchFavoriteOffersAction} from '../../store/api-actions';
 
+const mapStateToProps = ({favoriteOffers} : {favoriteOffers: Offer[]}) => ({favoriteOffers});
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({loadFavoriteOffers: fetchFavoriteOffersAction}, dispatch);
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
-type FavoritesPageProps = {
-  offers: Offer[];
-}
+type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function FavoritesPage({offers}: FavoritesPageProps): JSX.Element {
+function FavoritesPage({favoriteOffers, loadFavoriteOffers}: PropsFromRedux): JSX.Element {
 
-  const favorites = offers.filter((offer) => offer.isFavorite);
+  useEffect(() => {
+    loadFavoriteOffers();
+  });
 
-  return favorites.length ?
-    <FavoritesFilled offers={favorites} />
+  return favoriteOffers.length ?
+    <FavoritesFilled offers={favoriteOffers} />
     : <FavoritesEmpty />;
 }
 
-export default FavoritesPage;
+export default connector(FavoritesPage);
 

@@ -1,4 +1,4 @@
-import {CITIES, PlacesSortOptions, AuthorizationStatus, ErrorLoadingState} from '../const';
+import {CITIES, PlacesSortOptions, AuthorizationStatus, ErrorLoadingOkState} from '../const';
 import {State} from '../types/types';
 import {ActionType, Actions} from '../store/action';
 import {getOffersByCityName, createSortingOffers} from '../utils/utils';
@@ -17,16 +17,17 @@ const initalState: State = {
   authorizationStatus: AuthorizationStatus.NoAuth,
   mainOffers: [],
   comments: [],
-  offer: ErrorLoadingState.Loading,
+  offer: null,
   neighboursOffer: [],
+  favoriteOffers: [],
+  isLoadedFavorite: false,
+  dataState: ErrorLoadingOkState.Loading,
 };
 
 const reducer = (state: State = initalState, action: Actions): State => {
   switch (action.type) {
-    case ActionType.ErrorPage:
-      return {...state, offer: ErrorLoadingState.Error};
-    case ActionType.ClearOffer:
-      return {...state, offer: ErrorLoadingState.Loading};
+    case ActionType.DataStatus:
+      return {...state, dataState: action.payload};
     case ActionType.RequireAuthorization:
       return {...state, authorizationStatus: action.payload};
     case ActionType.Logout:
@@ -49,6 +50,8 @@ const reducer = (state: State = initalState, action: Actions): State => {
       return {...state, offer: action.payload};
     case ActionType.LoadComments:
       return {...state, comments: action.payload};
+    case ActionType.LoadFavoriteOffers:
+      return {...state, favoriteOffers: action.payload, isLoadedFavorite: true};
     default:
       return state;
   }

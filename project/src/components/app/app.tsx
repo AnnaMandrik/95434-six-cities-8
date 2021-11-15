@@ -36,7 +36,7 @@ function App({offers, authorizationStatus, isLoaded}: AppPageProps): JSX.Element
         </Route>
         <Route exact path={AppRoute.Favorites}>
           <PrivateRoute exact path ={AppRoute.Favorites}
-            render={() => <FavoritesPage offers={offers} />}
+            render={() => <FavoritesPage />}
             authorizationStatus={authorizationStatus}
           />
         </Route>
