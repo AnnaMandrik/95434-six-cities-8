@@ -4,7 +4,7 @@ import {bindActionCreators} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
 import {fetchCommentsAction} from '../../store/api-actions';
 import {Comment, ThunkAppDispatch} from '../../types/types';
-
+/* eslint-disable no-console */
 const mapStateToProps = ({comments} : {comments: Comment[]}) => ({comments});
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({loadComments: fetchCommentsAction}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -14,7 +14,6 @@ type ReviewListProps = PropsFromRedux & {offerId: number}
 
 
 function ReviewsList({offerId, comments, loadComments}: ReviewListProps): JSX.Element {
-
   useEffect(() => {
     loadComments(offerId);
   }, [offerId, loadComments]);
