@@ -7,22 +7,20 @@ import ErrorPage from '../error-page/error-page';
 import FavoritesPage from '../favorites-page/favorites-page';
 import LoginPage from '../login-page/login-page';
 import PrivateRoute from '../private-route/private-route';
-import {Offer, Comment, State} from '../../types/types';
+import {State} from '../../types/types';
 import Spinner from '../spinner/spinner';
 
 
 type AppPageProps = {
-  offers: Offer[],
-  comments: Comment[],
   authorizationStatus: AuthorizationStatus,
-  isOffersLoaded: boolean,
+  isLoaded: boolean,
 }
 
-const mapStateToProps = ({loadOffers, authorizationStatus, isOffersLoaded} : State) => ({offers: loadOffers, authorizationStatus, isOffersLoaded});
+const mapStateToProps = ({isLoaded, authorizationStatus, dataState} : State) => ({isLoaded, authorizationStatus, dataState});
 
-function App({offers, comments, authorizationStatus, isOffersLoaded}: AppPageProps): JSX.Element {
+function App({authorizationStatus, isLoaded}: AppPageProps): JSX.Element {
 
-  if (!isOffersLoaded) {
+  if (!isLoaded) {
     return <Spinner/>;
   }
 
@@ -37,12 +35,12 @@ function App({offers, comments, authorizationStatus, isOffersLoaded}: AppPagePro
         </Route>
         <Route exact path={AppRoute.Favorites}>
           <PrivateRoute exact path ={AppRoute.Favorites}
-            render={() => <FavoritesPage offers={offers} />}
+            render={() => <FavoritesPage />}
             authorizationStatus={authorizationStatus}
           />
         </Route>
         <Route exact path = {AppRoute.Property}>
-          <PropertyPage offers={offers} comments={comments} authorizationStatus={authorizationStatus} />
+          <PropertyPage authorizationStatus={authorizationStatus} />
         </Route>
         <Route>
           <ErrorPage />

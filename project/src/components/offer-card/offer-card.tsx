@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom';
 import {Offer} from '../../types/types';
 import {createRating} from '../../utils/utils';
 import FavoriteBtn from '../favorite-btn/favorite-btn';
-import {FavoriteBtnProp} from '../../const';
+import {FavoriteBtnProp, offerTypeToReadable} from '../../const';
 
 const OFFER_WAY = '/offer/';
 
@@ -13,16 +13,13 @@ type OfferCardProps = {
   cardWrapperStyle: string,
   cardImageWidth: string,
   cardImageHeight: string,
+  neighbourId: number,
 };
 
-function OfferCard({offer, ...styleProps}: OfferCardProps): JSX.Element {
+function OfferCard({offer, neighbourId, ...styleProps}: OfferCardProps): JSX.Element {
 
   const {price, title, previewImage, rating, type, id, isFavorite, isPremium} = offer;
   const {cardInfoStyle, cardWrapperStyle, cardImageWidth, cardImageHeight} = styleProps;
-  // const cardInfoStyle = typeCard === TypeOfferCard.Main ? '' : 'favorites__card-info';
-  // const cardWrapperStyle = typeCard === TypeOfferCard.Main ? 'cities__image-wrapper' : 'favorites__image-wrapper';
-  // const [cardImageWidth, cardImageHeight] = typeCard === TypeOfferCard.Main ? ['260', '200'] : ['150', '110'];
-
 
   return (
     <>
@@ -43,7 +40,7 @@ function OfferCard({offer, ...styleProps}: OfferCardProps): JSX.Element {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
 
-          <FavoriteBtn isFavorite={isFavorite} btn={FavoriteBtnProp.CARD}/>
+          <FavoriteBtn isFavorite={isFavorite} offerId={id} btnFavorite={FavoriteBtnProp.Card} neighbourId={neighbourId}/>
 
         </div>
         <div className="place-card__rating rating">
@@ -55,7 +52,7 @@ function OfferCard({offer, ...styleProps}: OfferCardProps): JSX.Element {
         <h2 className="place-card__name">
           <Link to={`${OFFER_WAY}${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{offerTypeToReadable[type]}</p>
       </div>
     </>
   );

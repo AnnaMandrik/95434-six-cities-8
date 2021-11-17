@@ -1,15 +1,20 @@
-import { useParams } from 'react-router';
-import { useState } from 'react';
+import {useParams} from 'react-router';
+import {useEffect} from 'react';
+import {bindActionCreators} from 'redux';
+import {connect, ConnectedProps} from 'react-redux';
 import HeaderPage from '../header-page/header-page';
 import FavoriteBtn from '../favorite-btn/favorite-btn';
-import OffersList from '../offers-list/offers-list';
-import {Offer, Comment} from '../../types/types';
-import {AuthorizationStatus, FavoriteBtnProp, CitiesCoordinates} from '../../const';
+import {State, ThunkAppDispatch} from '../../types/types';
+import {AuthorizationStatus, FavoriteBtnProp, ErrorLoadingOkState,
+  MIX_COUNT_IMG, MAX_COUNT_IMG, offerTypeToReadable} from '../../const';
 import {createRating} from '../../utils/utils';
 import ErrorPage from '../error-page/error-page';
 import CommentAddForm from '../comment-add-form/comment-add-form';
 import ReviewsList from '../reviews-list/reviews-list';
 import Map from '../map/map';
+import OfferNeighbour from '../offer-neighbour/offer-neighbour';
+import Spinner from '../spinner/spinner';
+import {fetchOfferByIdAction} from '../../store/api-actions';
 
 
 function PropertyPicture({src}: {src: string}) {
@@ -25,30 +30,39 @@ function FeatureInside({featureName}: {featureName: string}) {
   return <li className="property__inside-item">{featureName}</li>;
 }
 
+const mapStateToProps = ({neighboursOffer, offer, comments, dataState} : State) =>
+  ({neighbours: neighboursOffer, offer, comments, dataState});
 
-type PropertyPageProps = {
-  offers: Offer[],
-  comments: Comment[],
-  authorizationStatus: string,
-}
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({loadOffer: fetchOfferByIdAction}, dispatch);
+const connector = connect(mapStateToProps, mapDispatchToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>
 
 
-function PropertyPage({offers, comments, authorizationStatus}: PropertyPageProps): JSX.Element {
+function PropertyPage({authorizationStatus, neighbours, offer, comments,  dataState, loadOffer}:{authorizationStatus: AuthorizationStatus} & PropsFromRedux): JSX.Element {
 
-  const [, setActiveOfferCard] = useState<Offer | null>(null);
 
   const params: {id: string} = useParams();
   const id = +params.id;
 
-  const exactOffer = offers.find((offer) => offer.id === id);
+  useEffect(() => {
+    loadOffer(id, true);
+  }, [id, loadOffer]);
 
-  if (!exactOffer) {
+  if (dataState === ErrorLoadingOkState.Error) {
     return <ErrorPage />;
   }
 
-  const {price, title, rating, type, host, description, maxAdults, bedrooms, goods, images, isFavorite, isPremium} = exactOffer;
-  const cityCenter = CitiesCoordinates[exactOffer.city.name.toLowerCase()];
-  const neighbours = offers.filter((offer) => offer.city.name === exactOffer.city.name);
+  if (dataState === ErrorLoadingOkState.Loading || !offer) {
+    return <Spinner />;
+  }
+
+
+  const {price, title, rating, type, host, description, maxAdults, bedrooms,
+    goods, images, isFavorite, isPremium} = offer;
+
+  const cityCenter = {lat: offer.location.latitude, lng: offer.location.longitude};
+  const offersMarkersForMap = [...neighbours, offer];
+
 
   return (
     <div className="page">
@@ -59,7 +73,7 @@ function PropertyPage({offers, comments, authorizationStatus}: PropertyPageProps
           <div className="property__gallery-container container">
             <div className="property__gallery">
 
-              {images.map((image) => <PropertyPicture src={image} key={image} />)}
+              {images.slice(MIX_COUNT_IMG, MAX_COUNT_IMG).map((image: string) => <PropertyPicture src={image} key={image} />)}
 
             </div>
           </div>
@@ -76,7 +90,7 @@ function PropertyPage({offers, comments, authorizationStatus}: PropertyPageProps
                   {title}
                 </h1>
 
-                <FavoriteBtn isFavorite={isFavorite}  btn={FavoriteBtnProp.PROPERTY} />
+                <FavoriteBtn isFavorite={isFavorite} offerId={offer.id} btnFavorite={FavoriteBtnProp.Property} neighbourId={0} />
 
               </div>
               <div className="property__rating rating">
@@ -88,7 +102,7 @@ function PropertyPage({offers, comments, authorizationStatus}: PropertyPageProps
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {type}
+                  {offerTypeToReadable[type]}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
                   {bedrooms} Badrooms
@@ -130,31 +144,24 @@ function PropertyPage({offers, comments, authorizationStatus}: PropertyPageProps
               </div>
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
-                <ReviewsList comments={comments}/>
+                <ReviewsList offerId={offer.id}/>
 
-                {authorizationStatus === AuthorizationStatus.Auth && <CommentAddForm />}
+                {authorizationStatus === AuthorizationStatus.Auth && <CommentAddForm offerId={offer.id} />}
 
               </section>
             </div>
           </div>
           <section className="property__map map">
-            <Map city={cityCenter} offers={neighbours} activeOfferCard={null}/>
+            <Map city={cityCenter} offers={offersMarkersForMap} activeOfferCard={offer} currentOfferCard={offer.id} />
           </section>
         </section>
         <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
-
-              <OffersList offers={neighbours} handleActiveOfferSelect={setActiveOfferCard} />
-
-            </div>
-          </section>
+          <OfferNeighbour id={offer.id} neighbourId={offer.id} />
         </div>
       </main>
     </div>
   );
 }
 
-export default PropertyPage;
+export default connector(PropertyPage);
 

@@ -1,9 +1,10 @@
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {AxiosInstance} from 'axios';
-import {AuthorizationStatus} from '../const';
+import {AuthorizationStatus, ErrorLoadingOkState, OfferType, OffersButtonType} from '../const';
 import {Actions} from '../store/action';
 
-export type Host = {
+
+export type User = {
   avatarUrl: string,
   id: number,
   isPro: boolean,
@@ -16,17 +17,15 @@ export type Location = {
   zoom: number,
 }
 
-export type City = {
-  location: Location
-  name: string,
-}
-
 export type Offer = {
   bedrooms: number,
-  city: City,
+  city: {
+    location: Location,
+    name: string,
+  },
   description: string,
   goods: string[],
-  host: Host,
+  host: User,
   id: number,
   images: string[],
   isFavorite: boolean,
@@ -37,14 +36,7 @@ export type Offer = {
   price: number,
   rating: number,
   title: string,
-  type: string,
-}
-
-export type User = {
-  avatarUrl: string,
-  id: number,
-  isPro: boolean,
-  name: string,
+  type: OfferType,
 }
 
 export type Comment = {
@@ -59,6 +51,7 @@ export type ButtonFavorite = {
   className: string,
   width: string,
   height: string,
+  type: OffersButtonType,
 };
 
 export type PointInMap = {
@@ -70,11 +63,17 @@ export type PointInMap = {
 export type State = {
   city: string,
   offers: Offer[],
+  offer: Offer | null,
   activeOption: string,
   loadOffers: Offer[],
-  isOffersLoaded: boolean,
+  isLoaded: boolean,
   authorizationStatus: AuthorizationStatus,
   mainOffers: Offer[],
+  comments: Comment[],
+  neighboursOffer: Offer[],
+  favoriteOffers: Offer[],
+  isLoadedFavorite: boolean,
+  dataState: ErrorLoadingOkState,
 }
 
 
@@ -83,39 +82,6 @@ export type AuthData = {
   password: string;
 }
 
-export type ServersOffer = {
-  bedrooms: number,
-  city: City,
-  description: string,
-  goods: string[],
-  host: Host,
-  id: number,
-  images: string[],
-  'is_favorite': boolean,
-  'is_premium': boolean,
-  location: Location,
-  'max_adults': number,
-  'preview_image': string,
-  price: number,
-  rating: number,
-  title: string,
-  type: string,
-}
-
-type ServerUser = {
-  avatarUrl: string,
-  id: number,
-  'is_pro': boolean,
-  name: string,
-}
-
-export type ServersComment = {
-  comment: string,
-  date: string,
-  id: number,
-  rating: number,
-  user: ServerUser,
-}
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 

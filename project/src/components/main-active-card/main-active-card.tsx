@@ -30,7 +30,7 @@ function MainActiveCard({offer, onOfferSelected}: MainActiveCardProps): JSX.Elem
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <OfferCard offer={offer} {...styleProps}/>
+      <OfferCard offer={offer} {...styleProps} neighbourId={0} />
     </article>
   );
 }
