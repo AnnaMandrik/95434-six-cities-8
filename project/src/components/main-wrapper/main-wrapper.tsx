@@ -4,7 +4,7 @@ import MainEmpty from '../main-empty/main-empty';
 import {Offer, State} from '../../types/types';
 import {AuthorizationStatus} from '../../const';
 
-const mapStateToProps = ({city, offers}: State) => ({selectedCity: city, offers});
+const mapStateToProps = ({MainData: {city, offers}}: State) => ({selectedCity: city, offers});
 
 export type MainPageProps = {
   offers: Offer[],

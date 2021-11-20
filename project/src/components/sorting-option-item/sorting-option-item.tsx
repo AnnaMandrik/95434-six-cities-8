@@ -8,7 +8,7 @@ type SortingOptionItemProps = {
   onCloseOptionListClick: () => void,
 }
 
-const mapStateToProps = ({activeOption}: State) => ({activeOption});
+const mapStateToProps = ({MainData}: State) => ({activeOption: MainData.activeOption});
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({onOptionClick: changeOptionSorting}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

@@ -8,7 +8,7 @@ import {fetchFavoriteOffersAction} from '../../store/api-actions';
 import Spinner from '../spinner/spinner';
 
 
-const mapStateToProps = ({favoriteOffers, isLoadedFavorite, authorizationStatus} : State) => ({favoriteOffers, isLoadedFavorite});
+const mapStateToProps = ({FavoriteData: {favoriteOffers, isLoadedFavorite}} : State) => ({favoriteOffers, isLoadedFavorite});
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({loadFavoriteOffers: fetchFavoriteOffersAction}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

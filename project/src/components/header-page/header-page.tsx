@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom';
+import {memo} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {getUserEmail} from '../../services/user-email';
@@ -78,4 +79,4 @@ function HeaderPage({authorizationStatus}: {authorizationStatus?: string}): JSX.
   );
 }
 
-export default HeaderPage;
+export default memo(HeaderPage, (prev, next) => prev.authorizationStatus === next.authorizationStatus);

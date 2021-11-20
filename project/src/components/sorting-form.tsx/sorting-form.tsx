@@ -20,7 +20,7 @@ function SortingOptionList({onCloseOptionListClick}: SortingOptionListProps): JS
 }
 
 
-const mapStateToProps = ({activeOption}: State) => ({activeOption});
+const mapStateToProps = ({MainData: {activeOption}}: State) => ({activeOption});
 
 type SortingFormProps = {
   activeOption: string,

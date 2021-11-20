@@ -1,6 +1,6 @@
-import { useEffect, useRef} from 'react';
-import { Icon, Marker, LayerGroup } from 'leaflet';
-import { PointInMap, Offer } from '../../types/types';
+import {useEffect, useRef, memo} from 'react';
+import {Icon, Marker, LayerGroup} from 'leaflet';
+import {PointInMap, Offer} from '../../types/types';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/use-map';
 import {IconMapColour} from '../../const';
@@ -65,4 +65,4 @@ function Map(props: MapProps): JSX.Element {
   return <div style={{height: '100%'}} ref={mapRef}></div>;
 }
 
-export default Map;
+export default memo(Map, (prev, next) => prev.city === next.city && prev.activeOfferCard === next.activeOfferCard);

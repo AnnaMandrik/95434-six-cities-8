@@ -10,7 +10,7 @@ import LoginForm from '../login-form/login-form';
 import {randomCity} from '../../utils/utils';
 
 
-const mapStateToProps = ({authorizationStatus} : State) => ({authorizationStatus});
+const mapStateToProps = ({UserData} : State) => ({authorizationStatus: UserData.authorizationStatus});
 const mapDispatchToProps = (dispatch: Dispatch ) => bindActionCreators({onClickCity: changeCity, onClickCityOffers: getOffersList}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

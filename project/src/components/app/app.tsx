@@ -16,7 +16,7 @@ type AppPageProps = {
   isLoaded: boolean,
 }
 
-const mapStateToProps = ({isLoaded, authorizationStatus, dataState} : State) => ({isLoaded, authorizationStatus, dataState});
+const mapStateToProps = ({MainData: {isLoaded}, UserData: {authorizationStatus}} : State) => ({isLoaded, authorizationStatus});
 
 function App({authorizationStatus, isLoaded}: AppPageProps): JSX.Element {
 

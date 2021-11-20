@@ -1,7 +1,8 @@
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {AxiosInstance} from 'axios';
-import {AuthorizationStatus, ErrorLoadingOkState, OfferType, OffersButtonType} from '../const';
+import {OfferType, OffersButtonType} from '../const';
 import {Actions} from '../store/action';
+import {RootState} from '../store/root-reducer';
 
 
 export type User = {
@@ -60,21 +61,7 @@ export type PointInMap = {
 }
 
 
-export type State = {
-  city: string,
-  offers: Offer[],
-  offer: Offer | null,
-  activeOption: string,
-  loadOffers: Offer[],
-  isLoaded: boolean,
-  authorizationStatus: AuthorizationStatus,
-  mainOffers: Offer[],
-  comments: Comment[],
-  neighboursOffer: Offer[],
-  favoriteOffers: Offer[],
-  isLoadedFavorite: boolean,
-  dataState: ErrorLoadingOkState,
-}
+export type State = RootState;
 
 
 export type AuthData = {
@@ -83,6 +70,6 @@ export type AuthData = {
 }
 
 
-export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
+export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, RootState, AxiosInstance, Actions>;
 
-export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;
+export type ThunkAppDispatch = ThunkDispatch<RootState, AxiosInstance, Actions>;

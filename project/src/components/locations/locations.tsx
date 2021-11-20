@@ -8,7 +8,7 @@ import {CITIES} from '../../const';
 
 const ACTIVE = 'tabs__item tabs__item--active';
 
-const mapStateToProps = ({city} : State) => ({selectedCity: city});
+const mapStateToProps = ({MainData} : State) => ({selectedCity: MainData.city});
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({onClickCity: changeCity, onClickCityOffers: getOffersList}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

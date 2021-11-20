@@ -30,7 +30,7 @@ function FeatureInside({featureName}: {featureName: string}) {
   return <li className="property__inside-item">{featureName}</li>;
 }
 
-const mapStateToProps = ({neighboursOffer, offer, comments, dataState} : State) =>
+const mapStateToProps = ({RoomData: {neighboursOffer, offer, comments, dataState}} : State) =>
   ({neighbours: neighboursOffer, offer, comments, dataState});
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({loadOffer: fetchOfferByIdAction}, dispatch);

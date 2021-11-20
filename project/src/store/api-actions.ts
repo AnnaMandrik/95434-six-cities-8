@@ -4,18 +4,9 @@ import {getOffersList, loadOffers, loadOffer, requireAuthorization,
 import {ThunkActionResult, AuthData, Offer, Comment} from '../types/types';
 import {adaptOfferToClient, adaptCommentToClient} from '../services/adapter';
 import {dropToken, saveToken} from '../services/token';
-import {store} from '../index';
 import {APIRoute, AuthorizationStatus, ErrorLoadingOkState} from '.././const';
 import {saveUserEmail, dropUserEmail} from '../services/user-email';
 
-
-export const fetchOffersAction = (): ThunkActionResult =>
-  async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.get(APIRoute.Hotels);
-    const entranceData = await data.map((offer: Offer) => adaptOfferToClient(offer));
-    dispatch(loadOffers(entranceData));
-    dispatch(getOffersList(store.getState().city));
-  };
 
 export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
@@ -43,6 +34,13 @@ export const logoutAction = (): ThunkActionResult =>
     dispatch(requireLogout());
   };
 
+export const fetchOffersAction = (): ThunkActionResult =>
+  async (dispatch, getState, api): Promise<void> => {
+    const {data} = await api.get(APIRoute.Hotels);
+    const entranceData = await data.map((offer: Offer) => adaptOfferToClient(offer));
+    dispatch(loadOffers(entranceData));
+    dispatch(getOffersList(getState().MainData.city));
+  };
 
 export const fetchNeighborsOffersAction = (offerId: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {

@@ -89,7 +89,7 @@ const enum OfferType {
 
 const offerTypeToReadable = {
   [OfferType.Apartment]: 'Apartment',
-  [OfferType.Room]: 'Room',
+  [OfferType.Room]: 'Private Room',
   [OfferType.House]: 'House',
   [OfferType.Hotel]: 'Hotel',
 };

@@ -1,3 +1,4 @@
+import {memo}  from 'react';
 import {Offer} from '../../types/types';
 import MainActiveCard from '../main-active-card/main-active-card';
 
@@ -24,4 +25,4 @@ function OffersList({offers, handleActiveOfferSelect}:OffersListProps):JSX.Eleme
 
 }
 
-export default OffersList;
+export default memo(OffersList, (prev, next) => prev.offers === next.offers);

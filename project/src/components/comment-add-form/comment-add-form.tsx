@@ -1,41 +1,13 @@
-import {ChangeEvent, FormEvent, useState} from 'react';
+import {ChangeEvent, FormEvent, useState, useCallback} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {STARS} from '../../const';
 import {blockedReviewLengthSubmit} from '../../utils/utils';
 import {postCommentAction} from '../../store/api-actions';
 import {ThunkAppDispatch} from '../../types/types';
+import CommentAddStars from '../comment-add-stars/comment-add-stars';
+import CommentAddText from '../comment-add-text/comment-add-text';
 
 const TIME_ERROR = 5000;
-
-type RatingStarProps = {
-  star: {score: number, titleName: string},
-  starsCount: number,
-  onChange: (evt: ChangeEvent<HTMLInputElement>) => void,
-  disabled: boolean,
-}
-
-
-function RatingStar({star: {score, titleName}, starsCount, onChange, disabled}: RatingStarProps) {
-
-  const idStar = `${score}-stars`;
-
-  return (
-    <>
-      <input
-        disabled={disabled}
-        onChange={onChange}
-        checked={score === starsCount}
-        className="form__rating-input visually-hidden" name="rating" value={score} id={idStar} type="radio"
-      />
-      <label htmlFor={idStar} className="reviews__rating-label form__rating-label" title={titleName}>
-        <svg className="form__star-image" width="37" height="33">
-          <use xlinkHref="#icon-star"></use>
-        </svg>
-      </label>
-    </>
-  );
-}
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({postComment: postCommentAction}, dispatch);
 const connector = connect(null, mapDispatchToProps);
@@ -71,30 +43,17 @@ function CommentAddForm({offerId, postComment}: CommentFormProps): JSX.Element {
     postComment({offerId, review, rating, clearComment, notifyError, unblockForm});
   };
 
+  const handleTextInput = useCallback( (evt: ChangeEvent<HTMLTextAreaElement>) =>  setReview(evt.target.value), [] ) ;
+  const handleStarClick = useCallback( (evt: ChangeEvent<HTMLInputElement>) => setRating(+evt.currentTarget.value), [] );
+
+
   return(
     <form className="reviews__form form" action="#" method="post"
       onSubmit={handleSubmit}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
-      <div className="reviews__rating-form form__rating">
-
-        {STARS.map((star) => (
-          <RatingStar
-            disabled={isBlocked}
-            star={star}
-            starsCount={rating}
-            onChange={() => setRating(star.score)}
-            key={star.score}
-          />))}
-
-      </div>
-      <textarea
-        disabled={isBlocked}
-        value={review}
-        onChange={(evt: ChangeEvent<HTMLTextAreaElement>) => setReview(evt.target.value)}
-        className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"
-      >
-      </textarea>
+      <CommentAddStars onChange={handleStarClick} disabled={isBlocked} rating={rating}/>
+      <CommentAddText onChange={handleTextInput} disabled={isBlocked} value={review} />
       {isError && <span style={{color: 'red', fontWeight: 'normal'}}>Something wrong! Try again later</span>}
       <div className="reviews__button-wrapper">
         <p className="reviews__help">

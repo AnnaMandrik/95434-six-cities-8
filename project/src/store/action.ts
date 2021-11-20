@@ -11,7 +11,7 @@ export enum ActionType {
   LoadNeighbours = 'data/room/offers/LoadNeighbours',
   LoadFavoriteOffers = 'data/favorite/offers/LoadFavoriteOffers',
   RequireAuthorization = 'user/requireAuthorization',
-  Logout = 'user/Logout',
+  RequireLogout = 'user/requireLogout',
   ErrorPage = 'error404/ErrorPage',
   DataStatus = 'room/DataStatus',
 }
@@ -62,7 +62,7 @@ export const requireAuthorization = (authStatus: AuthorizationStatus) => ({
 } as const);
 
 export const requireLogout = () => ({
-  type: ActionType.Logout,
+  type: ActionType.RequireLogout,
 } as const);
 
 export const errorPage = () => ({
