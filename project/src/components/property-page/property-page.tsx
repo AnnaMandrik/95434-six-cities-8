@@ -15,6 +15,7 @@ import Map from '../map/map';
 import OfferNeighbour from '../offer-neighbour/offer-neighbour';
 import Spinner from '../spinner/spinner';
 import {fetchOfferByIdAction} from '../../store/api-actions';
+import {getNeighboursOffer, getOffer, getComments, getDataState} from '../../store/property-data/selectors';
 
 
 function PropertyPicture({src}: {src: string}) {
@@ -30,8 +31,8 @@ function FeatureInside({featureName}: {featureName: string}) {
   return <li className="property__inside-item">{featureName}</li>;
 }
 
-const mapStateToProps = ({RoomData: {neighboursOffer, offer, comments, dataState}} : State) =>
-  ({neighbours: neighboursOffer, offer, comments, dataState});
+const mapStateToProps = (state: State) =>
+  ({neighbours: getNeighboursOffer(state), offer: getOffer(state), comments: getComments(state), dataState: getDataState(state)});
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({loadOffer: fetchOfferByIdAction}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);

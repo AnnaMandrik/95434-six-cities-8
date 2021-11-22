@@ -9,6 +9,8 @@ import LoginPage from '../login-page/login-page';
 import PrivateRoute from '../private-route/private-route';
 import {State} from '../../types/types';
 import Spinner from '../spinner/spinner';
+import {getIsLoaded} from '../../store/main-data/selectors';
+import {getAuthorizationStatus} from '../../store/user-data/selectors';
 
 
 type AppPageProps = {
@@ -16,7 +18,7 @@ type AppPageProps = {
   isLoaded: boolean,
 }
 
-const mapStateToProps = ({MainData: {isLoaded}, UserData: {authorizationStatus}} : State) => ({isLoaded, authorizationStatus});
+const mapStateToProps = (state: State) => ({isLoaded: getIsLoaded(state), authorizationStatus: getAuthorizationStatus(state)});
 
 function App({authorizationStatus, isLoaded}: AppPageProps): JSX.Element {
 

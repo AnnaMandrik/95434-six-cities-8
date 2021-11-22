@@ -6,9 +6,10 @@ import FavoritesEmpty from '../favorites-empty/favorites-empty';
 import FavoritesFilled from '../favorites-filled/favorites-filled';
 import {fetchFavoriteOffersAction} from '../../store/api-actions';
 import Spinner from '../spinner/spinner';
+import {getFavoriteOffers, getIsLoadedFavorite} from '../../store/favorite-data/selectors';
 
 
-const mapStateToProps = ({FavoriteData: {favoriteOffers, isLoadedFavorite}} : State) => ({favoriteOffers, isLoadedFavorite});
+const mapStateToProps = (state : State) => ({favoriteOffers: getFavoriteOffers(state), isLoadedFavorite: getIsLoadedFavorite(state)});
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({loadFavoriteOffers: fetchFavoriteOffersAction}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

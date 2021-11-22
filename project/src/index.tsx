@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {createStore, applyMiddleware} from 'redux';
+import {configureStore} from '@reduxjs/toolkit';
 import {Provider} from 'react-redux';
-import {composeWithDevTools} from 'redux-devtools-extension';
-import thunk from 'redux-thunk';
 import App from './components/app/app';
 import {AuthorizationStatus, ErrorLoadingOkState} from './const';
 import {rootReducer} from './store/root-reducer';
@@ -18,7 +16,11 @@ const api = createAPI(
   () => store.dispatch(dataStatus(ErrorLoadingOkState.Error)),
 );
 
-export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))));
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({thunk: {extraArgument: api}}),
+});
+
 
 (store.dispatch as ThunkAppDispatch)(fetchOffersAction());
 (store.dispatch as ThunkAppDispatch)(checkAuthAction());

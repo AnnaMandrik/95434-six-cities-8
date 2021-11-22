@@ -4,9 +4,11 @@ import {bindActionCreators} from 'redux';
 import OfferRoomCard from '../offer-room-card/offer-room-card';
 import {fetchNeighborsOffersAction} from '../../store/api-actions';
 import {State, ThunkAppDispatch} from '../../types/types';
+import {getNeighboursOffer} from '../../store/property-data/selectors';
+import {getFavoriteOffers} from '../../store/favorite-data/selectors';
 
 
-const mapStateToProps = ({RoomData: {neighboursOffer}, FavoriteData: {favoriteOffers}} : State) => ({neighbours: neighboursOffer, favoriteOffers});
+const mapStateToProps = (state: State) => ({neighbours: getNeighboursOffer(state), favoriteOffers: getFavoriteOffers(state)});
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({getNeighbours: fetchNeighborsOffersAction}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

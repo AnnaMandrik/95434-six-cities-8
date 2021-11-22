@@ -8,9 +8,10 @@ import {AppRoute, AuthorizationStatus} from '../../const';
 import HeaderPage from '../header-page/header-page';
 import LoginForm from '../login-form/login-form';
 import {randomCity} from '../../utils/utils';
+import {getAuthorizationStatus} from '../../store/user-data/selectors';
 
 
-const mapStateToProps = ({UserData} : State) => ({authorizationStatus: UserData.authorizationStatus});
+const mapStateToProps = (state: State) => ({authorizationStatus: getAuthorizationStatus(state)});
 const mapDispatchToProps = (dispatch: Dispatch ) => bindActionCreators({onClickCity: changeCity, onClickCityOffers: getOffersList}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

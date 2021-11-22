@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux';
 import {AppRoute, AuthorizationStatus, OffersButtonType} from '../../const';
 import {postFavoriteStatus} from '../../store/api-actions';
 import {ButtonFavorite, ThunkAppDispatch, State} from '../../types/types';
+import {getAuthorizationStatus} from '../../store/user-data/selectors';
 
 type FavoriteBtnProps = {
   isFavorite: boolean,
@@ -12,7 +13,7 @@ type FavoriteBtnProps = {
 }
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({changeStatus: postFavoriteStatus}, dispatch);
-const mapStateToProps = ({UserData: {authorizationStatus}}: State) => ({authorizationStatus});
+const mapStateToProps = (state: State) => ({authorizationStatus: getAuthorizationStatus(state)});
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
