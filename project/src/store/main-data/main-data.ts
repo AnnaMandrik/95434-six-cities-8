@@ -1,6 +1,7 @@
+import {createReducer} from '@reduxjs/toolkit';
 import {CITIES, PlacesSortOptions} from '../../const';
 import {Offer} from '../../types/types';
-import {ActionType, Actions} from '../../store/action';
+import {changeCity, getOffersList, changeOptionSorting, loadOffers} from '../../store/action';
 import {getOffersByCityName, createSortingOffers} from '../../utils/utils';
 
 const START_CITY_INDEX = 0;
@@ -25,23 +26,22 @@ const initalState: MainData = {
   mainOffers: [],
 };
 
-const mainData = (state = initalState, action: Actions): MainData => {
-  switch (action.type) {
-    case ActionType.ChangeCity:
-      return {...state, city: action.payload};
-    case ActionType.GetOffersList:
-      return {...state,
-        mainOffers: getOffersByCityName(state.loadOffers, action.payload),
-        offers: getOffersByCityName(state.loadOffers, action.payload)};
-    case ActionType.ChangeOptionSorting:
-      return {...state,
-        activeOption: action.payload,
-        offers: createSortingOffers(state.mainOffers, action.payload)};
-    case ActionType.LoadOffers:
-      return {...state, loadOffers: action.payload, isLoaded: true};
-    default:
-      return state;
-  }
-};
+const mainData = createReducer (initalState, (builder) => {
+  builder
+    .addCase(changeCity, (state, action) => {state.city = action.payload;})
+    .addCase(getOffersList, (state, action) => {
+      state.mainOffers = getOffersByCityName(state.loadOffers, action.payload);
+      state.offers = getOffersByCityName(state.loadOffers, action.payload);
+    })
+    .addCase(changeOptionSorting, (state, action) => {
+      state.activeOption = action.payload;
+      state.offers = createSortingOffers(state.mainOffers, action.payload);
+    })
+    .addCase(loadOffers, (state, action) => {
+      state.loadOffers = action.payload;
+      state.isLoaded = true;
+    });
+});
 
 export {mainData};
+

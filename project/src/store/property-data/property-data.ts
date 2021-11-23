@@ -1,6 +1,7 @@
+import {createReducer} from '@reduxjs/toolkit';
 import {ErrorLoadingOkState} from '../../const';
 import {Offer, Comment} from '../../types/types';
-import {ActionType, Actions} from '../action';
+import {dataStatus, loadNeighbours, loadOffer, loadComments} from '../action';
 
 type PropertyData = {
   offer: Offer | null,
@@ -16,19 +17,12 @@ const initalState: PropertyData = {
   dataState: ErrorLoadingOkState.Loading,
 };
 
-const propertyData = (state = initalState, action: Actions): PropertyData => {
-  switch (action.type) {
-    case ActionType.DataStatus:
-      return {...state, dataState: action.payload};
-    case ActionType.LoadNeighbours:
-      return {...state, neighboursOffer: action.payload};
-    case ActionType.LoadOffer:
-      return {...state, offer: action.payload};
-    case ActionType.LoadComments:
-      return {...state, comments: action.payload};
-    default:
-      return state;
-  }
-};
+const propertyData = createReducer(initalState, (builder) => {
+  builder
+    .addCase(dataStatus, (state, action) => {state.dataState = action.payload;})
+    .addCase(loadNeighbours, (state, action) => {state.neighboursOffer = action.payload;})
+    .addCase(loadOffer, (state, action) => {state.offer = action.payload;})
+    .addCase(loadComments, (state, action) => {state.comments = action.payload;});
+});
 
 export {propertyData};

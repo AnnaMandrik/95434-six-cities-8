@@ -8,7 +8,6 @@ import {rootReducer} from './store/root-reducer';
 import {createAPI} from './services/api';
 import {fetchOffersAction, checkAuthAction} from './store/api-actions';
 import {requireAuthorization, dataStatus} from './store/action';
-import {ThunkAppDispatch} from './types/types';
 
 
 const api = createAPI(
@@ -22,8 +21,8 @@ const store = configureStore({
 });
 
 
-(store.dispatch as ThunkAppDispatch)(fetchOffersAction());
-(store.dispatch as ThunkAppDispatch)(checkAuthAction());
+store.dispatch(fetchOffersAction());
+store.dispatch(checkAuthAction());
 
 
 ReactDOM.render(
