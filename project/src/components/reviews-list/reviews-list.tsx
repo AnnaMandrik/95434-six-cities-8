@@ -1,33 +1,30 @@
-import Review from '../review/review';
 import {useEffect} from 'react';
-import {bindActionCreators} from 'redux';
-import {connect, ConnectedProps} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import Review from '../review/review';
 import {fetchCommentsAction} from '../../store/api-actions';
-import {State, ThunkAppDispatch} from '../../types/types';
 import {getComments} from '../../store/property-data/selectors';
-
-const mapStateToProps = (state: State) => ({comments: getComments(state)});
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({loadComments: fetchCommentsAction}, dispatch);
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ReviewListProps = PropsFromRedux & {offerId: number}
+import {MAX_COUNT_COMMENTS, MIN_COUNT_COMMENTS} from '../../const';
 
 
-function ReviewsList({offerId, comments, loadComments}: ReviewListProps): JSX.Element {
+function ReviewsList({offerId}: {offerId: number}): JSX.Element {
+
+  const comments = useSelector(getComments);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    loadComments(offerId);
-  }, [offerId, loadComments]);
+    dispatch(fetchCommentsAction(offerId));
+  }, [dispatch, offerId]);
 
   return(
     <ul className="reviews__list">
       {comments
         .slice()
         .sort((prev, next) => new Date(next.date).getTime() - new Date(prev.date).getTime())
+        .slice(MIN_COUNT_COMMENTS, MAX_COUNT_COMMENTS)
         .map((comment) => <Review commentInfo={comment} key={comment.id} />)}
     </ul>
   );
 }
 
-export default connector(ReviewsList);
+export default ReviewsList;
 

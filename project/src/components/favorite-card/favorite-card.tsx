@@ -9,7 +9,7 @@ const styleProps = {cardInfoStyle, cardWrapperStyle, cardImageWidth, cardImageHe
 function FavoriteCard({offer}: {offer: Offer}): JSX.Element {
   return(
     <article className="favorites__card place-card">
-      <OfferCard offer={offer} {...styleProps} neighbourId={0} />
+      <OfferCard offer={offer} {...styleProps} />
     </article>
   );
 }

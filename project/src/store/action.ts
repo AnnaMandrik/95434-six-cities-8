@@ -71,19 +71,3 @@ export const dataStatus =  createAction(
   (status: ErrorLoadingOkState) => ({payload: status}),
 );
 
-
-export type Actions =
-ReturnType<typeof requireAuthorization> |
-ReturnType<typeof requireLogout> |
-ReturnType<typeof changeCity> |
-ReturnType<typeof getOffersList> |
-ReturnType<typeof changeOptionSorting> |
-ReturnType<typeof loadOffers> |
-ReturnType<typeof loadOffer> |
-ReturnType<typeof loadComments> |
-ReturnType<typeof loadNeighbours> |
-ReturnType<typeof loadFavoriteOffers> |
-ReturnType<typeof errorPage> |
-ReturnType<typeof dataStatus>;
-
-

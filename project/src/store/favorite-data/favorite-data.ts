@@ -5,7 +5,7 @@ import {Offer} from '../../types/types';
 type FavoriteData = {
   favoriteOffers: Offer[],
   isLoadedFavorite: boolean,
-}
+};
 
 const initalState: FavoriteData = {
   favoriteOffers: [],

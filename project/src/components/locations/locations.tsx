@@ -1,42 +1,38 @@
-import { bindActionCreators, Dispatch } from 'redux';
-import { connect, ConnectedProps } from 'react-redux';
-import { MouseEvent } from 'react';
-import { State } from '../../types/types';
+import {useDispatch, useSelector} from 'react-redux';
+import {MouseEvent, memo} from 'react';
 import {changeCity, getOffersList} from '../../store/action';
 import {CITIES} from '../../const';
 import {getCity} from '../../store/main-data/selectors';
 
 
-const ACTIVE = 'tabs__item tabs__item--active';
+function Location ({city} : {city: string}): JSX.Element {
 
-const mapStateToProps = (state: State) => ({selectedCity: getCity(state)});
-const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({onClickCity: changeCity, onClickCityOffers: getOffersList}, dispatch);
-const connector = connect(mapStateToProps, mapDispatchToProps);
+  const selectedCity = useSelector(getCity);
+  const dispatch = useDispatch();
+  const snapCity = () => dispatch(changeCity(city));
+  const snapOffersOfCity = () => dispatch(getOffersList(city));
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
 
-
-function Location ({city, selectedCity, onClickCity, onClickCityOffers} : {city: string} & PropsFromRedux): JSX.Element {
-
-  const onClick = (evt: MouseEvent) => {
+  const handleCityOffersClick = (evt: MouseEvent) => {
     evt.preventDefault();
-    onClickCity(city);
-    onClickCityOffers(city);
+    snapCity();
+    snapOffersOfCity();
   };
 
   return (
     <li className="locations__item">
-      <a href='/' onClick={onClick} className={`locations__item-link tabs__item ${city === selectedCity ? ACTIVE : ''}`}>
+      <a href='/' onClick={handleCityOffersClick} className={`locations__item-link tabs__item ${city === selectedCity ?
+        'tabs__item tabs__item--active' : ''}`}
+      >
         <span>{city}</span>
       </a>
     </li>
   );
 }
 
-const LocationPropsFromRedux = connector(Location);
 function Locations(): JSX.Element {
 
-  const allCities = CITIES.map((city) => <LocationPropsFromRedux city={city} key={city} />);
+  const allCities = CITIES.map((city) => <Location city={city} key={city} />);
   return (
     <section className="locations container">
       <ul className="locations__list tabs__list">
@@ -46,4 +42,4 @@ function Locations(): JSX.Element {
   );
 }
 
-export default Locations;
+export default memo(Locations);

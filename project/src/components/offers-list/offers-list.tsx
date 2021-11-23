@@ -5,10 +5,10 @@ import MainActiveCard from '../main-active-card/main-active-card';
 
 type OffersListProps = {
   offers: Offer[];
-  handleActiveOfferSelect?: (offer: Offer | null) => void,
+  onActiveOfferSelected?: (offer: Offer | null) => void,
 }
 
-function OffersList({offers, handleActiveOfferSelect}:OffersListProps):JSX.Element {
+function OffersList({offers, onActiveOfferSelected}:OffersListProps):JSX.Element {
 
   return (
     <>
@@ -16,7 +16,7 @@ function OffersList({offers, handleActiveOfferSelect}:OffersListProps):JSX.Eleme
         <MainActiveCard
           offer={offer}
           key={offer.id}
-          onOfferSelected={handleActiveOfferSelect}
+          onOfferSelected={onActiveOfferSelected}
         />
       ))}
 

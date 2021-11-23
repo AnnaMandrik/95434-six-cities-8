@@ -1,20 +1,13 @@
 import {ChangeEvent, FormEvent, useState, useCallback} from 'react';
-import {connect, ConnectedProps} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import {useDispatch} from 'react-redux';
 import {blockedReviewLengthSubmit} from '../../utils/utils';
 import {postCommentAction} from '../../store/api-actions';
-import {ThunkAppDispatch} from '../../types/types';
 import CommentAddStars from '../comment-add-stars/comment-add-stars';
 import CommentAddText from '../comment-add-text/comment-add-text';
+import {TIME_ERROR} from '../../const';
 
-const TIME_ERROR = 5000;
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({postComment: postCommentAction}, dispatch);
-const connector = connect(null, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type CommentFormProps = PropsFromRedux & {offerId: number};
-
-function CommentAddForm({offerId, postComment}: CommentFormProps): JSX.Element {
+function CommentAddForm({offerId}: {offerId: number}): JSX.Element {
 
   const [review, setReview] = useState('');
   const [rating, setRating] = useState(0);
@@ -37,10 +30,13 @@ function CommentAddForm({offerId, postComment}: CommentFormProps): JSX.Element {
     setTimeout(() => setError(false), TIME_ERROR);
   };
 
+  const dispatch = useDispatch();
+  const postComment = () => dispatch(postCommentAction({offerId, review, rating, clearComment, notifyError, unblockForm}));
+
   const handleSubmit=(evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     setBlock(true);
-    postComment({offerId, review, rating, clearComment, notifyError, unblockForm});
+    postComment();
   };
 
   const handleTextInput = useCallback( (evt: ChangeEvent<HTMLTextAreaElement>) =>  setReview(evt.target.value), [] ) ;
@@ -65,4 +61,4 @@ function CommentAddForm({offerId, postComment}: CommentFormProps): JSX.Element {
   );
 }
 
-export default connector(CommentAddForm);
+export default CommentAddForm;

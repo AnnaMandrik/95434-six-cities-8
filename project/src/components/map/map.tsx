@@ -1,8 +1,8 @@
 import {useEffect, useRef, memo} from 'react';
 import {Icon, Marker, LayerGroup} from 'leaflet';
-import {PointInMap, Offer} from '../../types/types';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/use-map';
+import {PointInMap, Offer} from '../../types/types';
 import {IconMapColour} from '../../const';
 
 type MapProps = {

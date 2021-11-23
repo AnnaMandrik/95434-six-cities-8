@@ -1,6 +1,4 @@
-import { bindActionCreators, Dispatch } from 'redux';
-import { connect, ConnectedProps } from 'react-redux';
-import { State } from '../../types/types';
+import {useDispatch, useSelector} from 'react-redux';
 import {changeOptionSorting} from '../../store/action';
 import {getActiveOption} from '../../store/main-data/selectors';
 
@@ -9,16 +7,14 @@ type SortingOptionItemProps = {
   onCloseOptionListClick: () => void,
 }
 
-const mapStateToProps = (state: State) => ({activeOption: getActiveOption(state)});
-const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({onOptionClick: changeOptionSorting}, dispatch);
-const connector = connect(mapStateToProps, mapDispatchToProps);
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
+function SortingOptionItem({option, onCloseOptionListClick}: SortingOptionItemProps): JSX.Element {
 
-function SortingOptionItem({option, onOptionClick, activeOption, onCloseOptionListClick}: SortingOptionItemProps & PropsFromRedux): JSX.Element {
+  const activeOption = useSelector(getActiveOption);
+  const dispatch = useDispatch();
 
   const handleOptionClick = () => {
-    onOptionClick(option);
+    dispatch(changeOptionSorting(option));
     onCloseOptionListClick();
   };
 
@@ -33,4 +29,4 @@ function SortingOptionItem({option, onOptionClick, activeOption, onCloseOptionLi
   );
 }
 
-export default connector(SortingOptionItem);
+export default SortingOptionItem;

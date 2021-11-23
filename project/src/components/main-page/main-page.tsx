@@ -1,17 +1,22 @@
+import {useState} from 'react';
 import OffersList from '../offers-list/offers-list';
 import HeaderPage from '../header-page/header-page';
 import Locations from '../locations/locations';
 import {Offer} from '../../types/types';
 import Map from '../map/map';
-import { useState } from 'react';
-import {CitiesCoordinates} from '../../const';
-import {MainPageProps} from '../main-wrapper/main-wrapper';
+import {CitiesCoordinates, AuthorizationStatus} from '../../const';
 import SortingForm from '../sorting-form.tsx/sorting-form';
 
 
+export type MainPageProps = {
+  offers: Offer[],
+  authorizationStatus: AuthorizationStatus,
+  selectedCity: string,
+}
+
 function MainPage({offers, authorizationStatus, selectedCity}: MainPageProps): JSX.Element {
 
-  const center = CitiesCoordinates[selectedCity.toLowerCase()];
+  const cityCenterLatLng = CitiesCoordinates[selectedCity.toLowerCase()];
 
   const [activeOfferCard, setActiveOfferCard] = useState<Offer | null>(null);
 
@@ -38,12 +43,12 @@ function MainPage({offers, authorizationStatus, selectedCity}: MainPageProps): J
               <SortingForm />
 
               <div className="cities__places-list places__list tabs__content">
-                <OffersList handleActiveOfferSelect={handleActiveOfferSelect} offers={offers} />
+                <OffersList onActiveOfferSelected={handleActiveOfferSelect} offers={offers} />
               </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city={center} offers={offers} activeOfferCard={activeOfferCard}/>
+                <Map city={cityCenterLatLng} offers={offers} activeOfferCard={activeOfferCard}/>
               </section>
             </div>
           </div>

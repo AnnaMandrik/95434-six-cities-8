@@ -1,12 +1,10 @@
 import {useParams} from 'react-router';
 import {useEffect} from 'react';
-import {bindActionCreators} from 'redux';
-import {connect, ConnectedProps} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import HeaderPage from '../header-page/header-page';
 import FavoriteBtn from '../favorite-btn/favorite-btn';
-import {State, ThunkAppDispatch} from '../../types/types';
 import {AuthorizationStatus, FavoriteBtnProp, ErrorLoadingOkState,
-  MIX_COUNT_IMG, MAX_COUNT_IMG, offerTypeToReadable} from '../../const';
+  MIN_COUNT_IMG, MAX_COUNT_IMG, offerTypeToReadable} from '../../const';
 import {createRating} from '../../utils/utils';
 import ErrorPage from '../error-page/error-page';
 import CommentAddForm from '../comment-add-form/comment-add-form';
@@ -31,23 +29,23 @@ function FeatureInside({featureName}: {featureName: string}) {
   return <li className="property__inside-item">{featureName}</li>;
 }
 
-const mapStateToProps = (state: State) =>
-  ({neighbours: getNeighboursOffer(state), offer: getOffer(state), comments: getComments(state), dataState: getDataState(state)});
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({loadOffer: fetchOfferByIdAction}, dispatch);
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>
-
-
-function PropertyPage({authorizationStatus, neighbours, offer, comments,  dataState, loadOffer}:{authorizationStatus: AuthorizationStatus} & PropsFromRedux): JSX.Element {
+function PropertyPage({authorizationStatus}:{authorizationStatus: AuthorizationStatus}): JSX.Element {
 
 
   const params: {id: string} = useParams();
   const id = +params.id;
 
+  const neighbours = useSelector(getNeighboursOffer);
+  const offer = useSelector(getOffer);
+  const dataState = useSelector(getDataState);
+  const comments = useSelector(getComments);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    loadOffer(id, true);
-  }, [id, loadOffer]);
+    dispatch(fetchOfferByIdAction(id, true));
+  }, [id, dispatch]);
 
   if (dataState === ErrorLoadingOkState.Error) {
     return <ErrorPage />;
@@ -74,7 +72,7 @@ function PropertyPage({authorizationStatus, neighbours, offer, comments,  dataSt
           <div className="property__gallery-container container">
             <div className="property__gallery">
 
-              {images.slice(MIX_COUNT_IMG, MAX_COUNT_IMG).map((image: string) => <PropertyPicture src={image} key={image} />)}
+              {images.slice(MIN_COUNT_IMG, MAX_COUNT_IMG).map((image: string) => <PropertyPicture src={image} key={image} />)}
 
             </div>
           </div>
@@ -91,7 +89,7 @@ function PropertyPage({authorizationStatus, neighbours, offer, comments,  dataSt
                   {title}
                 </h1>
 
-                <FavoriteBtn isFavorite={isFavorite} offerId={offer.id} btnFavorite={FavoriteBtnProp.Property} neighbourId={0} />
+                <FavoriteBtn isFavorite={isFavorite} offerId={offer.id} btnFavorite={FavoriteBtnProp.Property} />
 
               </div>
               <div className="property__rating rating">
@@ -157,12 +155,12 @@ function PropertyPage({authorizationStatus, neighbours, offer, comments,  dataSt
           </section>
         </section>
         <div className="container">
-          <OfferNeighbour id={offer.id} neighbourId={offer.id} />
+          <OfferNeighbour id={offer.id} />
         </div>
       </main>
     </div>
   );
 }
 
-export default connector(PropertyPage);
+export default PropertyPage;
 

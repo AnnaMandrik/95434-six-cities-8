@@ -1,7 +1,7 @@
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {AxiosInstance} from 'axios';
+import {Action} from 'redux';
 import {OfferType, OffersButtonType} from '../const';
-import {Actions} from '../store/action';
 import {RootState} from '../store/root-reducer';
 
 
@@ -70,6 +70,6 @@ export type AuthData = {
 }
 
 
-export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, RootState, AxiosInstance, Actions>;
+export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, RootState, AxiosInstance, Action>;
 
-export type ThunkAppDispatch = ThunkDispatch<RootState, AxiosInstance, Actions>;
+export type ThunkAppDispatch = ThunkDispatch<RootState, AxiosInstance, Action>;

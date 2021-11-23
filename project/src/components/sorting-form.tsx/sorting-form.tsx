@@ -1,14 +1,14 @@
+import {useState} from 'react';
+import {useSelector} from 'react-redux';
 import SortingOptionItem from '../sorting-option-item/sorting-option-item';
-import  {PlacesSortOptions} from '../../const';
-
-import { useState } from 'react';
-import { connect } from 'react-redux';
-import { State } from '../../types/types';
+import {PlacesSortOptions} from '../../const';
+import {getActiveOption} from '../../store/main-data/selectors';
 
 
 type SortingOptionListProps = {
   onCloseOptionListClick: () => void,
 }
+
 
 function SortingOptionList({onCloseOptionListClick}: SortingOptionListProps): JSX.Element {
   const optionList = Object.keys(PlacesSortOptions).map((key) => <SortingOptionItem onCloseOptionListClick={onCloseOptionListClick} option={PlacesSortOptions[key]} key={key}/>);
@@ -20,14 +20,9 @@ function SortingOptionList({onCloseOptionListClick}: SortingOptionListProps): JS
 }
 
 
-const mapStateToProps = ({MainData: {activeOption}}: State) => ({activeOption});
+function SortingForm(): JSX.Element {
 
-type SortingFormProps = {
-  activeOption: string,
-}
-
-function SortingForm({activeOption} : SortingFormProps): JSX.Element {
-
+  const activeOption = useSelector(getActiveOption);
   const [isOptionsShown, setIsOptionsShown] = useState(false);
 
   const handleSortOptionOpen = () => {
@@ -48,4 +43,4 @@ function SortingForm({activeOption} : SortingFormProps): JSX.Element {
   );
 }
 
-export default connect(mapStateToProps)(SortingForm);
+export default SortingForm;
