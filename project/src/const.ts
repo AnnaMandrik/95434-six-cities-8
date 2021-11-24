@@ -77,8 +77,11 @@ const enum ErrorLoadingOkState {
   Ok = 'Ok',
 }
 
-const MIX_COUNT_IMG = 0;
+const MIN_COUNT_IMG = 0;
 const MAX_COUNT_IMG = 6;
+
+const MIN_COUNT_COMMENTS = 0;
+const MAX_COUNT_COMMENTS = 10;
 
 const enum OfferType {
   Apartment = 'apartment',
@@ -89,12 +92,15 @@ const enum OfferType {
 
 const offerTypeToReadable = {
   [OfferType.Apartment]: 'Apartment',
-  [OfferType.Room]: 'Room',
+  [OfferType.Room]: 'Private Room',
   [OfferType.House]: 'House',
   [OfferType.Hotel]: 'Hotel',
 };
 
+const TIME_ERROR = 5000;
 
-export {OfferType, MIX_COUNT_IMG, offerTypeToReadable, MAX_COUNT_IMG, ErrorLoadingOkState,
+
+export {OfferType, MIN_COUNT_IMG, offerTypeToReadable, MAX_COUNT_IMG, ErrorLoadingOkState,
   ReviewTextLength, APIRoute, PlacesSortOptions, IconMapColour, CitiesCoordinates, STARS,
-  FavoriteBtnProp, AppRoute, AuthorizationStatus, CITIES, OffersButtonType};
+  FavoriteBtnProp, AppRoute, AuthorizationStatus, CITIES, OffersButtonType, TIME_ERROR,
+  MIN_COUNT_COMMENTS, MAX_COUNT_COMMENTS};

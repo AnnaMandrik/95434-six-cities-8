@@ -1,7 +1,13 @@
 import HeaderPage from '../header-page/header-page';
 import Locations from '../locations/locations';
+import {AuthorizationStatus} from '../../const';
 
-function MainEmpty({authorizationStatus, selectedCity}: {authorizationStatus: string, selectedCity: string}): JSX.Element {
+type MainEmptyProps = {
+  authorizationStatus: AuthorizationStatus,
+  selectedCity: string,
+}
+
+function MainEmpty({authorizationStatus, selectedCity}: MainEmptyProps): JSX.Element {
   return(
     <div className="page page--gray page--main">
       <HeaderPage authorizationStatus={authorizationStatus} />

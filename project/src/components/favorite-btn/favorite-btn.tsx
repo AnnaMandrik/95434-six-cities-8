@@ -1,34 +1,30 @@
-import {connect, ConnectedProps} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router';
-import {bindActionCreators} from 'redux';
 import {AppRoute, AuthorizationStatus, OffersButtonType} from '../../const';
 import {postFavoriteStatus} from '../../store/api-actions';
-import {ButtonFavorite, ThunkAppDispatch, State} from '../../types/types';
+import {ButtonFavorite} from '../../types/types';
+import {getAuthorizationStatus} from '../../store/user-data/selectors';
 
 type FavoriteBtnProps = {
   isFavorite: boolean,
   btnFavorite: ButtonFavorite,
-  offerId: number
+  offerId: number,
 }
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({changeStatus: postFavoriteStatus}, dispatch);
-const mapStateToProps = ({authorizationStatus}: State) => ({authorizationStatus});
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function FavoriteBtn({isFavorite, btnFavorite, authorizationStatus, offerId, changeStatus, neighbourId = 0}: FavoriteBtnProps & PropsFromRedux & {neighbourId: number}): JSX.Element {
+function FavoriteBtn({isFavorite, btnFavorite, offerId}: FavoriteBtnProps): JSX.Element {
 
   const history = useHistory();
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const dispatch = useDispatch();
+  const propertyId = btnFavorite.type === OffersButtonType.Property ? offerId : 0;
+  const status = isFavorite ? 0 : 1;
+  const changeStatus = () => dispatch(postFavoriteStatus(offerId, status, propertyId));
 
   const handleChangeFavoriteStatus = () => {
     if (authorizationStatus === AuthorizationStatus.NoAuth) {
       return history.push(AppRoute.Login);
     }
-
-    const propertyId = btnFavorite.type === OffersButtonType.Property ? offerId : 0;
-    const status = isFavorite ? 0 : 1;
-    changeStatus(offerId, status, propertyId || neighbourId);
+    changeStatus();
   };
 
   const activeClass = isFavorite ? `${btnFavorite.className}__bookmark-button--active` : '';
@@ -45,4 +41,4 @@ function FavoriteBtn({isFavorite, btnFavorite, authorizationStatus, offerId, cha
   );
 }
 
-export default connector(FavoriteBtn);
+export default FavoriteBtn;

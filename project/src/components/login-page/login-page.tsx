@@ -1,27 +1,25 @@
 import {Link} from 'react-router-dom';
-import {bindActionCreators, Dispatch} from 'redux';
-import {connect, ConnectedProps} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Redirect} from 'react-router';
 import {changeCity, getOffersList} from '../../store/action';
-import {State} from '../../types/types';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import HeaderPage from '../header-page/header-page';
 import LoginForm from '../login-form/login-form';
 import {randomCity} from '../../utils/utils';
+import {getAuthorizationStatus} from '../../store/user-data/selectors';
 
 
-const mapStateToProps = ({authorizationStatus} : State) => ({authorizationStatus});
-const mapDispatchToProps = (dispatch: Dispatch ) => bindActionCreators({onClickCity: changeCity, onClickCityOffers: getOffersList}, dispatch);
-const connector = connect(mapStateToProps, mapDispatchToProps);
+function LoginPage(): JSX.Element {
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const dispatch = useDispatch();
+  const snapCity = () => dispatch(changeCity(randomCity)) ;
+  const snapOffersOfCity = () => dispatch(getOffersList(randomCity));
 
-
-function LoginPage({onClickCity, onClickCityOffers, authorizationStatus}: PropsFromRedux): JSX.Element {
 
   const handleRandomCityClick = () => {
-    onClickCity(randomCity);
-    onClickCityOffers(randomCity);
+    snapCity();
+    snapOffersOfCity();
   };
 
   if (authorizationStatus === AuthorizationStatus.Auth) {
@@ -30,7 +28,7 @@ function LoginPage({onClickCity, onClickCityOffers, authorizationStatus}: PropsF
 
   return (
     <div className="page page--gray page--login">
-      <HeaderPage />
+      <HeaderPage authorizationStatus={authorizationStatus} />
       <main className="page__main page__main--login">
         <div className="page__login-container container">
           <section className="login">
@@ -50,4 +48,4 @@ function LoginPage({onClickCity, onClickCityOffers, authorizationStatus}: PropsF
   );
 }
 
-export default connector(LoginPage);
+export default LoginPage;

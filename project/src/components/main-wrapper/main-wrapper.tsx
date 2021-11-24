@@ -1,25 +1,18 @@
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import MainPage from '../main-page/main-page';
 import MainEmpty from '../main-empty/main-empty';
-import {Offer, State} from '../../types/types';
 import {AuthorizationStatus} from '../../const';
-
-const mapStateToProps = ({city, offers}: State) => ({selectedCity: city, offers});
-
-export type MainPageProps = {
-  offers: Offer[],
-  authorizationStatus: AuthorizationStatus,
-  selectedCity: string,
-}
+import {getCity, getOffers} from '../../store/main-data/selectors';
 
 
-function MainWrapper({offers, authorizationStatus, selectedCity}: MainPageProps): JSX.Element {
+function MainWrapper({authorizationStatus}: {authorizationStatus: AuthorizationStatus}): JSX.Element {
 
-  const selectedCityOffers = offers.filter((offer) => offer.city.name === selectedCity);
+  const offers = useSelector(getOffers);
+  const selectedCity = useSelector(getCity);
 
-  return selectedCityOffers.length ?
-    <MainPage offers={selectedCityOffers} authorizationStatus={authorizationStatus} selectedCity={selectedCity} /> :
+  return offers.length ?
+    <MainPage offers={offers} authorizationStatus={authorizationStatus} selectedCity={selectedCity} /> :
     <MainEmpty authorizationStatus={authorizationStatus} selectedCity={selectedCity} />;
 }
 
-export default connect(mapStateToProps)(MainWrapper);
+export default MainWrapper;

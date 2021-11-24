@@ -1,24 +1,21 @@
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
-import {connect} from 'react-redux';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {useSelector} from 'react-redux';
+import {AppRoute} from '../../const';
 import MainWrapper from '../main-wrapper/main-wrapper';
 import PropertyPage from '../property-page/property-page';
 import ErrorPage from '../error-page/error-page';
 import FavoritesPage from '../favorites-page/favorites-page';
 import LoginPage from '../login-page/login-page';
 import PrivateRoute from '../private-route/private-route';
-import {State} from '../../types/types';
 import Spinner from '../spinner/spinner';
+import {getIsLoaded} from '../../store/main-data/selectors';
+import {getAuthorizationStatus} from '../../store/user-data/selectors';
 
 
-type AppPageProps = {
-  authorizationStatus: AuthorizationStatus,
-  isLoaded: boolean,
-}
+function App(): JSX.Element {
 
-const mapStateToProps = ({isLoaded, authorizationStatus, dataState} : State) => ({isLoaded, authorizationStatus, dataState});
-
-function App({authorizationStatus, isLoaded}: AppPageProps): JSX.Element {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const isLoaded = useSelector(getIsLoaded);
 
   if (!isLoaded) {
     return <Spinner/>;
@@ -50,4 +47,4 @@ function App({authorizationStatus, isLoaded}: AppPageProps): JSX.Element {
   );
 }
 
-export default connect(mapStateToProps)(App);
+export default App;
