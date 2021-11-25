@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {configureStore} from '@reduxjs/toolkit';
 import {Provider} from 'react-redux';
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import App from './components/app/app';
 import {AuthorizationStatus, ErrorLoadingOkState} from './const';
 import {rootReducer} from './store/root-reducer';
@@ -20,14 +22,14 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({thunk: {extraArgument: api}}),
 });
 
-
-store.dispatch(fetchOffersAction());
 store.dispatch(checkAuthAction());
+store.dispatch(fetchOffersAction());
 
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
+      <ToastContainer />
       <App />
     </Provider>
   </React.StrictMode>,

@@ -1,3 +1,4 @@
+import {toast} from 'react-toastify';
 import {getOffersList, loadOffers, loadOffer, requireAuthorization,
   requireLogout, loadNeighbours, loadComments, dataStatus,
   loadFavoriteOffers} from './action';
@@ -7,13 +8,16 @@ import {dropToken, saveToken} from '../services/token';
 import {APIRoute, AuthorizationStatus, ErrorLoadingOkState} from '.././const';
 import {saveUserEmail, dropUserEmail} from '../services/user-email';
 
+const AUTH_FAIL_MESSAGE = 'Do not forget to Sign In!!!!!!';
 
 export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    await api.get(APIRoute.Login)
-      .then(() => {
-        dispatch(requireAuthorization(AuthorizationStatus.Auth));
-      });
+    try {
+      await api.get(APIRoute.Login);
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    } catch {
+      toast.info(AUTH_FAIL_MESSAGE);
+    }
   };
 
 export const loginAction = ({email, password}: AuthData): ThunkActionResult =>
