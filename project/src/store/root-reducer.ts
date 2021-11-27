@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 import {mainData} from './main-data/main-data';
 import {propertyData} from './property-data/property-data';
-import { favoriteData } from './favorite-data/favorite-data';
+import {favoriteData} from './favorite-data/favorite-data';
 import {userData} from './user-data/user-data';
 
 export const enum NameDataList {
