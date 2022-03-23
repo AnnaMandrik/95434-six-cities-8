@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import {Offer, Comment} from '../types/types';
 
 
@@ -29,6 +30,7 @@ export const adaptOfferToClient = (offer: any): Offer => {
 };
 
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const adaptCommentToClient = (comment: any): Comment => {
   const adaptedComent= Object.assign(
     {},
